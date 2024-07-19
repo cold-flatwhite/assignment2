@@ -1,6 +1,7 @@
-import { Text, View, Button } from "react-native";
+import { Text, View, Button, StyleSheet } from "react-native";
 import ItemsList from "../components/ItemsList";
-const ActivitiesScreen = ({}) => {
+
+const ActivitiesScreen = ({ navigation }) => {
   const data = [
     {
       id: 1,
@@ -32,23 +33,19 @@ const ActivitiesScreen = ({}) => {
     },
   ];
 
-  
-
   return (
-    <View>
-      <ItemsList
-        data={data}
-        renderItem={({ item }) => (
-          <View>
-            <Text>Type: {item.activityType}</Text>
-            <Text>Special: {item.special ? "Yes" : "No"}</Text>
-            <Text>Duration: {item.duration} minutes</Text>
-            <Text>Date: {item.date}</Text>
-          </View>
-        )}
-      />
+    <View style={styles.container}>
+        <ItemsList data={data} />
     </View>
   );
 };
 
 export default ActivitiesScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#B4B3DB",
+    padding: 10,
+  },
+});
