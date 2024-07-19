@@ -3,6 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import ActivitiesScreen from "./screens/ActivitiesScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
+import DietScreen from "./screens/DietScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -14,8 +16,17 @@ const TabNavigator = () => {
         name="Activities"
         component={ActivitiesScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: () => (
             <FontAwesome5 name="running" size={24} color="grey" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Diet"
+        component={DietScreen}
+        options={{
+          tabBarIcon: () => (
+            <Ionicons name="fast-food" size={24} color="grey" />
           ),
         }}
       />

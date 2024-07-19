@@ -5,10 +5,10 @@ const ItemsList = ({data}) => {
 
     const renderItem = ({ item }) => (
         <View style={styles.itemContainer}>
-          <Text style={styles.activityType}>{item.activityType}</Text>
+          <Text style={styles.itemType}>{item.itemType}</Text>
           {item.special && <Entypo name="warning" size={24} color="yellow" />}
           <Text style={styles.date}>{item.date}</Text>
-          <Text style={styles.duration}>{item.duration} min</Text>
+          <Text style={styles.data}>{item.data}</Text>
         </View>
       );
 
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
       width : '80%',
       justifyContent : 'center',
     },
-    activityType: {
+    itemType: {
       fontSize: 16,
       color: 'white',
       flex : 1,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
       backgroundColor : 'white',
       padding : 5,
     },
-    duration: {
+    data: {
       fontSize: 16,
       backgroundColor : 'white',
       padding : 5,
