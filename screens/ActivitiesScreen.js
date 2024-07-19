@@ -15,8 +15,8 @@ const ActivitiesScreen = ({ navigation }) => {
           pressedFunction={() => alert("Button Pressed!")}
         >
           <View style={styles.iconContainer}>
-            <AntDesign name="plus" size={24} color="white" />
-            <FontAwesome5 name="running" size={24} color="white" />
+            <AntDesign name="plus" size={20} color="white" />
+            <FontAwesome5 name="running" size={20} color="white" />
           </View>
         </PressableButton>
       ),
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonStyle: {
-    marginLeft: 15,
+    marginRight: 5,
     padding: 5,
     alignContent: "center",
     justifyContent: "center",
