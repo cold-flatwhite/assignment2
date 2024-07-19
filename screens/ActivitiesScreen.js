@@ -32,6 +32,8 @@ const ActivitiesScreen = ({}) => {
     },
   ];
 
+  
+
   return (
     <View>
       <ItemsList
