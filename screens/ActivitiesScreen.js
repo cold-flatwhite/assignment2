@@ -1,21 +1,24 @@
 import { Text, View, Button, StyleSheet, Pressable } from "react-native";
 import ItemsList from "../components/ItemsList";
 import { useEffect } from "react";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-
+import PressableButton from "../components/PressableButton";
 
 const ActivitiesScreen = ({ navigation }) => {
   useEffect(() => {
     navigation.setOptions({
-      tabBarIcon: () => (
-        <FontAwesome5 name="running" size={24} color="grey" />
-      ),
+      tabBarIcon: () => <FontAwesome5 name="running" size={24} color="grey" />,
       headerRight: () => (
-        <Pressable onPress={() => alert('Button Pressed!')}>
-        <AntDesign name="plus" size={24} color="black" />
-        <FontAwesome5 name="running" size={24} color="grey" />
-      </Pressable>
+        <PressableButton
+          componentStyle={styles.buttonStyle}
+          pressedFunction={() => alert("Button Pressed!")}
+        >
+          <View style={styles.iconContainer}>
+            <AntDesign name="plus" size={24} color="white" />
+            <FontAwesome5 name="running" size={24} color="white" />
+          </View>
+        </PressableButton>
       ),
     });
   }, [navigation]);
@@ -52,7 +55,7 @@ const ActivitiesScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-        <ItemsList data={data} />
+      <ItemsList data={data} />
     </View>
   );
 };
@@ -64,5 +67,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#B4B3DB",
     padding: 10,
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  buttonStyle: {
+    marginLeft: 15,
+    padding: 5,
+    alignContent: "center",
+    justifyContent: "center",
   },
 });
