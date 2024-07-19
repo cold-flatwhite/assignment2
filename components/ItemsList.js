@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
       padding: 10,
       borderRadius: 8,
       marginBottom: 10,
-      width : '80%',
+      width : '90%',
       justifyContent : 'center',
     },
     itemType: {

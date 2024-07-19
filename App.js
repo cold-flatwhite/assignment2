@@ -5,21 +5,25 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
 import DietScreen from "./screens/DietScreen";
 import { Ionicons } from "@expo/vector-icons";
+import { Pressable } from "react-native";
+import { View } from "react-native";
+import { AntDesign } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const defaultSetting = {
+  headerStyle : {backgroundColor : "#4A3C93"},
+  headTintColor : "white",
+  headerTitleStyle: { color: "white" },
+}
+
 const TabNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={defaultSetting}>
       <Tab.Screen
         name="Activities"
         component={ActivitiesScreen}
-        options={{
-          tabBarIcon: () => (
-            <FontAwesome5 name="running" size={24} color="grey" />
-          ),
-        }}
       />
       <Tab.Screen
         name="Diet"
@@ -37,7 +41,7 @@ const TabNavigator = () => {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={defaultSetting}>
         <Stack.Screen
           name="Home"
           component={TabNavigator}
