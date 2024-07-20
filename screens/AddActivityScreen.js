@@ -13,6 +13,7 @@ import { useActivity } from "../components/ActivityContext";
 
 
 const AddActivityScreen = ({ navigation }) => {
+  const {addActivity} = useActivity();
   const [activityType, setActivityType] = useState(null);
   const [duration, setDuration] = useState("");
   const [date, setDate] = useState(null);
@@ -51,6 +52,14 @@ const AddActivityScreen = ({ navigation }) => {
     if (!validateInputs()) {
       return;
     }
+    const newActivity = {
+      id: Date.now(),
+      itemType: activityType,
+      data: `${duration} min`,
+      date: date.toDateString(),
+      special: false,
+    };
+    addActivity(newActivity);
     navigation.goBack();
   };
 
