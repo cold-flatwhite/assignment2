@@ -12,7 +12,7 @@ const ActivitiesScreen = ({ navigation }) => {
       headerRight: () => (
         <PressableButton
           componentStyle={styles.buttonStyle}
-          pressedFunction={() => alert("Button Pressed!")}
+          pressedFunction={() => navigation.navigate('AddActivity')}
         >
           <View style={styles.iconContainer}>
             <AntDesign name="plus" size={20} color="white" />

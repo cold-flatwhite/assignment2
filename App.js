@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import ActivitiesScreen from "./screens/ActivitiesScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import DietScreen from "./screens/DietScreen";
-
+import AddActivityScreen from "./screens/AddActivityScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -32,6 +32,7 @@ export default function App() {
           component={TabNavigator}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="AddActivity" component={AddActivityScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
