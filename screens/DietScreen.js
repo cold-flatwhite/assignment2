@@ -39,7 +39,7 @@ const DietScreen = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#B4B3DB',
+        backgroundColor: '#D2C7E7',
         padding: 10,
       },
       iconContainer: {

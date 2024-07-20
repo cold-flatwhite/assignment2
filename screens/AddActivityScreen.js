@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Button, TextInput, Text } from "react-native";
+import { StyleSheet, View, TextInput, Text, TouchableOpacity } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import PressableButton from "../components/PressableButton"; 
+
 
 const AddActivityScreen = ({ navigation }) => {
   const [activityType, setActivityType] = useState(null);
   const [duration, setDuration] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
   const [open, setOpen] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [items, setItems] = useState([
     { label: "Walking", value: "walking" },
     { label: "Running", value: "running" },
@@ -18,6 +21,13 @@ const AddActivityScreen = ({ navigation }) => {
 
   const saveActivity = () => {
     navigation.goBack();
+  };
+
+  const handleDateChange = (selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
   };
 
   return (
@@ -41,24 +51,38 @@ const AddActivityScreen = ({ navigation }) => {
         placeholder="Duration"
         value={duration}
         onChangeText={setDuration}
-        keyboardType="numeric"
       />
 
       <Text style={styles.label}>Date *</Text>
-      <DateTimePicker
-        value={date}
-        mode="date"
-        display="default"
-        onChange={(event, selectedDate) => {
-          const currentDate = selectedDate || date;
-          setDate(currentDate);
-        }}
-        style={styles.datePicker}
-      />
+      <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.input}>
+        <Text style={{ color: date ? "#000" : "#aaa" }}>
+          {date ? date.toDateString() : "Select Date"}
+        </Text>
+      </TouchableOpacity>
+
+      {showDatePicker && (
+        <DateTimePicker
+          value={date || new Date()}
+          mode="date"
+          display="inline"
+          onChange={handleDateChange}
+          style={styles.datePicker}
+        />
+      )}
 
       <View style={styles.buttonContainer}>
-        <Button title="Cancel" onPress={() => navigation.goBack()} color="#B20000" />
-        <Button title="Save" onPress={saveActivity} color="#4A3C93" />
+        <PressableButton
+          pressedFunction={() => navigation.goBack()}
+          componentStyle={[styles.button, styles.cancelButton]}
+        >
+          <Text style={styles.buttonText}>Cancel</Text>
+        </PressableButton>
+        <PressableButton
+          pressedFunction={saveActivity}
+          componentStyle={[styles.button, styles.saveButton]}
+        >
+          <Text style={styles.buttonText}>Save</Text>
+        </PressableButton>
       </View>
     </View>
   );
@@ -78,7 +102,7 @@ const styles = StyleSheet.create({
   },
   dropDownContainer: {
     marginBottom: 20,
-    zIndex: 1000,
+    zIndex: 1000, 
   },
   dropDown: {
     backgroundColor: "#fff",
@@ -91,10 +115,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 10,
     backgroundColor: "#fff",
+    justifyContent: "center",
   },
   datePicker: {
     width: "100%",
-    marginBottom: 20,
     backgroundColor: "#fff",
     borderRadius: 5,
   },
@@ -102,6 +126,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 20,
+  },
+  button: {
+    padding: 10,
+    borderRadius: 5,
+  },
+  cancelButton: {
+    backgroundColor: "#B20000",
+  },
+  saveButton: {
+    backgroundColor: "#4A3C93",
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
 
