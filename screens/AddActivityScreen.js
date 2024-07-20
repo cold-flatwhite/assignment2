@@ -9,6 +9,8 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import PressableButton from "../components/PressableButton";
+import { useActivity } from "../components/ActivityContext";
+
 
 const AddActivityScreen = ({ navigation }) => {
   const [activityType, setActivityType] = useState(null);
