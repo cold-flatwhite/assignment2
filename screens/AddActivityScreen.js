@@ -4,7 +4,7 @@ import {
   View,
   TextInput,
   Text,
-  TouchableOpacity,
+  Alert,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -24,7 +24,31 @@ const AddActivityScreen = ({ navigation }) => {
     { label: "Yoga", value: "yoga" },
   ]);
 
+  const validateInputs = () => {
+    if (!activityType) {
+      Alert.alert("Invalid Input", "Please select an activity.");
+      return false;
+    }
+    if (!duration) {
+      Alert.alert("Invalid Input", "Please enter a duration.");
+      return false;
+    }
+    if (isNaN(duration) || parseFloat(duration) <= 0) {
+      Alert.alert("Invalid Input", "Please enter a valid duration.");
+      return false;
+    }
+    if (!date) {
+      Alert.alert("Invalid Input", "Please enter a valid date.");
+      return false;
+    }
+    return true;
+  };
+
+
   const saveActivity = () => {
+    if (!validateInputs()) {
+      return;
+    }
     navigation.goBack();
   };
 
@@ -35,7 +59,7 @@ const AddActivityScreen = ({ navigation }) => {
     }
   };
 
-  const toggleDatePicker = () => {
+  const handleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
     if (!date) {
       setDate(new Date());
@@ -67,7 +91,7 @@ const AddActivityScreen = ({ navigation }) => {
 
         <Text style={styles.label}>Date *</Text>
         <PressableButton
-          pressedFunction={toggleDatePicker}
+          pressedFunction={handleDatePicker}
           componentStyle={styles.input}
         >
           <Text style={{ color: date ? "#000" : "#aaa" }}>
