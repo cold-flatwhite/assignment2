@@ -86,7 +86,7 @@ const AddActivityScreen = ({ navigation }) => {
           setOpen={setOpen}
           setValue={setActivityType}
           setItems={setItems}
-          style={styles.dropDown}
+          style={[styles.dropDown, styles.input]}
           containerStyle={styles.dropDownContainer}
           placeholder="Select An Activity"
         />
@@ -154,8 +154,8 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 5,
     color: "#333",
+    marginTop : 15,
   },
   dropDownContainer: {
     marginBottom: 20,
@@ -167,17 +167,17 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    marginBottom: 20,
+    borderColor: "#4A3C93",
+    borderWidth: 2,
     paddingHorizontal: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#D2C7E7",
     justifyContent: "center",
+    borderRadius : 7,
   },
   datePicker: {
     width: "100%",
-    backgroundColor: "#fff",
-    borderRadius: 5,
+    backgroundColor: "#D2C7E7",
+    borderRadius: 7,
   },
   buttonContainer: {
     flexDirection: "row",

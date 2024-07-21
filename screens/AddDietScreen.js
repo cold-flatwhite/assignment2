@@ -22,7 +22,7 @@ const AddDietScreen = ({navigation}) => {
         Alert.alert("Invalid Input", "Please enter the calories.");
         return false;
       }
-      if (isNaN(duration) || parseFloat(duration) <= 0) {
+      if (isNaN(calories) || parseFloat(calories) <= 0) {
         Alert.alert("Invalid Input", "Please enter vaild carlories.");
         return false;
       }
@@ -44,7 +44,7 @@ const AddDietScreen = ({navigation}) => {
       const newActivity = {
         id: Date.now(),
         itemType: activityType,
-        data: `${duration} min`,
+        data: `${calories}`,
         date: date.toDateString(),
         special: isSpecial,
       };
@@ -157,7 +157,7 @@ const AddDietScreen = ({navigation}) => {
     datePicker: {
       width: "100%",
       backgroundColor: "#D2C7E7",
-      borderRadius: 5,
+      borderRadius: 7,
     },
     buttonContainer: {
       flexDirection: "row",
