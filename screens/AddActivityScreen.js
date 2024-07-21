@@ -1,19 +1,12 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  Text,
-  Alert,
-} from "react-native";
+import { StyleSheet, View, TextInput, Text, Alert } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import PressableButton from "../components/PressableButton";
 import { useActivity } from "../components/ActivityContext";
 
-
 const AddActivityScreen = ({ navigation }) => {
-  const {addActivity} = useActivity();
+  const { addActivity } = useActivity();
   const [activityType, setActivityType] = useState(null);
   const [duration, setDuration] = useState("");
   const [date, setDate] = useState(null);
@@ -47,17 +40,22 @@ const AddActivityScreen = ({ navigation }) => {
     return true;
   };
 
-
   const saveActivity = () => {
     if (!validateInputs()) {
       return;
     }
+
+    const durationInMinutes = parseFloat(duration);
+    const isSpecial =
+      (activityType === "running" || activityType === "weights") &&
+      durationInMinutes > 60;
+
     const newActivity = {
       id: Date.now(),
       itemType: activityType,
       data: `${duration} min`,
       date: date.toDateString(),
-      special: false,
+      special: isSpecial,
     };
     addActivity(newActivity);
     navigation.goBack();
