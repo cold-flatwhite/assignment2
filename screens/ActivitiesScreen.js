@@ -2,16 +2,15 @@ import { Text, View, Button, StyleSheet, Pressable } from "react-native";
 import ItemsList from "../components/ItemsList";
 import { useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
 import PressableButton from "../components/PressableButton";
 import { useActivity } from "../components/ActivityContext";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const ActivitiesScreen = ({ navigation }) => {
   const { activities } = useActivity();
 
   useEffect(() => {
     navigation.setOptions({
-      tabBarIcon: () => <FontAwesome5 name="running" size={24} color="grey" />,
       headerRight: () => (
         <PressableButton
           componentStyle={styles.buttonStyle}

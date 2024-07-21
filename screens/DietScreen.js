@@ -32,7 +32,6 @@ const data = [
 const DietScreen = ({ navigation }) => {
   useEffect(() => {
     navigation.setOptions({
-      tabBarIcon: () => <Ionicons name="fast-food" size={24} color="grey" />,
       headerRight: () => (
         <PressableButton
           componentStyle={styles.buttonStyle}

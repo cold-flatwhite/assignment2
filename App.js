@@ -5,7 +5,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import DietScreen from "./screens/DietScreen";
 import AddActivityScreen from "./screens/AddActivityScreen";
 import { ActivityProvider } from "./components/ActivityContext";
-import AddDietScreen from './screens/AddDietScreen';
+import AddDietScreen from "./screens/AddDietScreen";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -19,8 +21,24 @@ const defaultSetting = {
 const TabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={defaultSetting}>
-      <Tab.Screen name="Activities" component={ActivitiesScreen} />
-      <Tab.Screen name="Diet" component={DietScreen} />
+      <Tab.Screen
+        name="Activities"
+        component={ActivitiesScreen}
+        options={{
+          tabBarIcon: () => (
+            <FontAwesome5 name="running" size={24} color="grey" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Diet"
+        component={DietScreen}
+        options={{
+          tabBarIcon: () => (
+            <Ionicons name="fast-food" size={24} color="grey" />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
@@ -36,7 +54,7 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="AddActivity" component={AddActivityScreen} />
-          <Stack.Screen name="AddDiet" component={AddDietScreen}/>
+          <Stack.Screen name="AddDiet" component={AddDietScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ActivityProvider>
