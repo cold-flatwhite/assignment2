@@ -8,6 +8,7 @@ import { ActivityProvider } from "./components/ActivityContext";
 import AddDietScreen from "./screens/AddDietScreen";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { DietProvider } from "./components/DietContext";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -46,17 +47,19 @@ const TabNavigator = () => {
 export default function App() {
   return (
     <ActivityProvider>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={defaultSetting}>
-          <Stack.Screen
-            name="Home"
-            component={TabNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name="AddActivity" component={AddActivityScreen} />
-          <Stack.Screen name="AddDiet" component={AddDietScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <DietProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={defaultSetting}>
+            <Stack.Screen
+              name="Home"
+              component={TabNavigator}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="AddActivity" component={AddActivityScreen} />
+            <Stack.Screen name="AddDiet" component={AddDietScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </DietProvider>
     </ActivityProvider>
   );
 }

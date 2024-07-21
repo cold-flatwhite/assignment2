@@ -3,10 +3,10 @@ import { StyleSheet, View, TextInput, Text, Alert } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import PressableButton from "../components/PressableButton";
-import { useActivity } from "../components/ActivityContext";
-
+import { useDiet } from "../components/DietContext";
 
 const AddDietScreen = ({navigation}) => {
+    const {addDiet} = useDiet();
     const [dietDescription, setdietDescription] = useState(null);
     const [calories, setCalories] = useState("");
     const [date, setDate] = useState(null);
@@ -41,14 +41,14 @@ const AddDietScreen = ({navigation}) => {
       const caloriesInNum = parseFloat(calories);
       const isSpecial = caloriesInNum > 800;
   
-      const newActivity = {
+      const newDiet = {
         id: Date.now(),
-        itemType: activityType,
+        itemType: dietDescription,
         data: `${calories}`,
         date: date.toDateString(),
         special: isSpecial,
       };
-      addActivity(newActivity);
+      addDiet(newDiet);
       navigation.goBack();
     };
   
@@ -75,8 +75,8 @@ const AddDietScreen = ({navigation}) => {
             value={dietDescription}
             onChangeText={setdietDescription}
             multiline={true}
-            numberOfLines={4} // 设置初始行数
-            textAlignVertical="top" // 使文本从顶部开始
+            numberOfLines={4}
+            textAlignVertical="top" 
           />
   
           <Text style={styles.label}>Calories *</Text>

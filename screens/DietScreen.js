@@ -4,32 +4,11 @@ import ItemsList from "../components/ItemsList";
 import { useEffect } from "react";
 import PressableButton from "../components/PressableButton";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-
-const data = [
-  {
-    id: "1",
-    itemType: "Breakfast",
-    data: 500,
-    date: "Mon Jul 15 2024",
-    special: false,
-  },
-  {
-    id: "2",
-    itemType: "Lunch",
-    data: 850,
-    date: "Mon Jul 01 2024",
-    special: true,
-  },
-  {
-    id: "3",
-    itemType: "Dinner",
-    data: 600,
-    date: "Tue Jul 09 2024",
-    special: false,
-  },
-];
+import { useDiet } from "../components/DietContext";
 
 const DietScreen = ({ navigation }) => {
+  const {diets} = useDiet();
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -47,7 +26,7 @@ const DietScreen = ({ navigation }) => {
   }, [navigation]);
   return (
     <View style={styles.container}>
-      <ItemsList data={data} />
+      <ItemsList data={diets} />
     </View>
   );
 };
