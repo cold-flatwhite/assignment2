@@ -89,7 +89,7 @@ const AddDietScreen = ({navigation}) => {
           <Text style={styles.label}>Date *</Text>
           <PressableButton
             pressedFunction={handleDatePicker}
-            componentStyle={styles.input}
+            componentStyle={[styles.input, styles.dateButton]}
           >
             <Text style={{ color: date ? "#000" : "#aaa" }}>
               {date ? date.toDateString() : ""}
@@ -137,25 +137,26 @@ const AddDietScreen = ({navigation}) => {
     contentContainer: {
       flex: 1,
       justifyContent: "flex-start",
-      paddingTop: 25,
+      paddingTop: 10,
     },
     label: {
       fontSize: 16,
       fontWeight: "bold",
-      marginBottom: 5,
       color: "#333",
+      marginTop : 15,
     },
     input: {
       height: 40,
-      borderColor: "#ccc",
-      borderWidth: 1,
-      marginBottom: 20,
+      borderColor: "#4A3C93",
+      borderWidth: 2,
       paddingHorizontal: 10,
-      backgroundColor: "#fff",     
+      backgroundColor: "#D2C7E7",
+      justifyContent : "center",
+      borderRadius : 10,
     },
     datePicker: {
       width: "100%",
-      backgroundColor: "#fff",
+      backgroundColor: "#D2C7E7",
       borderRadius: 5,
     },
     buttonContainer: {
