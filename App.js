@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import DietScreen from "./screens/DietScreen";
 import AddActivityScreen from "./screens/AddActivityScreen";
 import { ActivityProvider } from "./components/ActivityContext";
+import AddDietScreen from './screens/AddDietScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -35,6 +36,7 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="AddActivity" component={AddActivityScreen} />
+          <Stack.Screen name="AddDiet" component={AddDietScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
     </ActivityProvider>
