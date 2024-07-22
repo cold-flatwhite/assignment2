@@ -12,8 +12,22 @@ export const DietProvider = ({ children }) => {
     setDiets((prevDiets) => [...prevDiets, diet]);
   };
 
+  const removeDiet = (id) => {
+    setDiets((prevDites) =>
+      prevDites.filter((diet) => diet.id !== id)
+    );
+  };
+
+  const updateDiet = (updatedDiet) => {
+    setDiets((prevDiets) =>
+      prevDiets.map((diet) =>
+        diet.id === updatedDiet.id ? updatedDiet : diet
+      )
+    );
+  };
+
   return (
-    <DietContext.Provider value={{ diets, addDiet }}>
+    <DietContext.Provider value={{ diets, addDiet, removeDiet, updateDiet }}>
       {children}
     </DietContext.Provider>
   );

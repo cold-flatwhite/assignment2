@@ -3,14 +3,32 @@ import { StyleSheet, View, TextInput, Text, Alert } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import PressableButton from "../components/PressableButton";
 import { useDiet } from "../components/DietContext";
+import { useEffect } from "react";
+import { AntDesign } from '@expo/vector-icons';
 
-const EditDietScreen = ({navigation}) => {
-    const {addDiet} = useDiet();
-    const [dietDescription, setdietDescription] = useState(null);
-    const [calories, setCalories] = useState("");
-    const [date, setDate] = useState(null);
+const EditDietScreen = ({route, navigation}) => {
+    const {item} = route.params;
+    console.log(item);
+
+    const { removeDiet, updateDiet} = useDiet();
+    const [dietDescription, setdietDescription] = useState(item.itemType);
+    const [calories, setCalories] = useState(item.data);
+    const [date, setDate] = useState(new Date(item.date));
     const [showDatePicker, setShowDatePicker] = useState(false);
 
+    useEffect(() => {
+        navigation.setOptions({
+          headerRight: () => (
+            <PressableButton
+              componentStyle={styles.buttonStyle}
+              pressedFunction={() => handleDelete()}
+            >
+              <AntDesign name="delete" size={24} color="white" />
+            </PressableButton>
+          ),
+        });
+      }, [navigation]);
+    
   
     const validateInputs = () => {
       if (!dietDescription) {
@@ -41,13 +59,14 @@ const EditDietScreen = ({navigation}) => {
       const isSpecial = caloriesInNum > 800;
   
       const newDiet = {
-        id: Date.now(),
+        id: item.id,
         itemType: dietDescription,
         data: `${calories}`,
         date: date.toDateString(),
         special: isSpecial,
       };
-      addDiet(newDiet);
+      updateDiet(newDiet);
+      Alert.alert('Success', 'Diet updated successfully.');
       navigation.goBack();
     };
   
@@ -64,6 +83,12 @@ const EditDietScreen = ({navigation}) => {
         setDate(new Date());
       }
     };
+
+    const handleDelete = () => {
+        removeDiet(item.id);
+        Alert.alert('Success', 'Diet deleted successfully.');
+        navigation.goBack();
+      };
   
     return (
       <View style={styles.container}>
