@@ -21,7 +21,7 @@ const EditDietScreen = ({route, navigation}) => {
           headerRight: () => (
             <PressableButton
               componentStyle={styles.buttonStyle}
-              pressedFunction={() => handleDelete()}
+              pressedFunction={confirmDelete}
             >
               <AntDesign name="delete" size={24} color="white" />
             </PressableButton>
@@ -89,6 +89,44 @@ const EditDietScreen = ({route, navigation}) => {
         Alert.alert('Success', 'Diet deleted successfully.');
         navigation.goBack();
       };
+
+      const confirmSave = () => {
+        Alert.alert(
+          'Import',
+          'Are you sure you want to save these changes?',
+          [
+            {
+              text: 'No',
+              onPress: () => {},
+              style: 'cancel',
+            },
+            {
+              text: 'Yes',
+              onPress: saveDietEntry,
+            },
+          ],
+          { cancelable: false }
+        );
+      };
+    
+      const confirmDelete = () => {
+        Alert.alert(
+          'Delete',
+          'Are you sure you want to delete this item?',
+          [
+            {
+              text: 'No',
+              onPress: () => {},
+              style: 'cancel',
+            },
+            {
+              text: 'Yes',
+              onPress: handleDelete,
+            },
+          ],
+          { cancelable: false }
+        );
+      };    
   
     return (
       <View style={styles.container}>
@@ -141,7 +179,7 @@ const EditDietScreen = ({route, navigation}) => {
           )}
           {!showDatePicker && (
             <PressableButton
-              pressedFunction={saveDietEntry}
+              pressedFunction={confirmSave}
               componentStyle={[styles.button, styles.saveButton]}
             >
               <Text style={styles.buttonText}>Save</Text>
