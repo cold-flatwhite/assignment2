@@ -4,7 +4,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import PressableButton from "../components/PressableButton";
 import { useDiet } from "../components/DietContext";
 
-const AddDietScreen = ({navigation}) => {
+const EditDietScreen = ({navigation}) => {
     const {addDiet} = useDiet();
     const [dietDescription, setdietDescription] = useState(null);
     const [calories, setCalories] = useState("");
@@ -186,4 +186,4 @@ const AddDietScreen = ({navigation}) => {
   });
   
 
-export default AddDietScreen
+export default EditDietScreen

@@ -11,11 +11,11 @@ import PressableButton from "./PressableButton";
 import { useNavigation } from '@react-navigation/native';
 
 
-const ItemsList = ({ data}) => {
+const ItemsList = ({ data, editScreen}) => {
   const navigation = useNavigation();
-
+  console.log("editScreen" + editScreen);
   const handlePress = (item) => {
-    navigation.navigate("EditActivity", { item });
+    navigation.navigate(editScreen, { item });
   };
 
   const renderItem = ({ item }) => (

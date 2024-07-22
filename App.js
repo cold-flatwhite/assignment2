@@ -10,6 +10,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { DietProvider } from "./components/DietContext";
 import EditActivityScreen from "./screens/EditActivityScreen";
+import EditDietScreen from "./screens/EditDietScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -62,6 +63,11 @@ export default function App() {
               name="EditActivity"
               component={EditActivityScreen}
               options={{ title: "Edit Activity" }}
+            />
+              <Stack.Screen
+              name="EditDiet"
+              component={EditDietScreen}
+              options={{ title: "Edit Diet" }}
             />
           </Stack.Navigator>
         </NavigationContainer>

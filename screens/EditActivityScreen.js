@@ -12,7 +12,6 @@ const EditActivityScreen = ({ route, navigation }) => {
   console.log({item});
   const { removeActivity, updateActivity} = useActivity();
 
-  const { activities, setActivities } = useActivity();
   const [activityType, setActivityType] = useState(item.itemType);
   const [duration, setDuration] = useState(item.data.split(' ')[0]);
   const [date, setDate] = useState(new Date(item.date));
