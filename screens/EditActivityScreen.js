@@ -5,7 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import PressableButton from '../components/PressableButton'; // Ensure the path is correct
 import { useActivity } from '../components/ActivityContext';
 import { AntDesign } from '@expo/vector-icons';
-import CheckBox from '@react-native-community/checkbox'; // Updated import
+import Checkbox from 'expo-checkbox';
 
 const EditActivityScreen = ({ route, navigation }) => {
   const { item } = route.params;
@@ -25,6 +25,8 @@ const EditActivityScreen = ({ route, navigation }) => {
     { label: 'Weights', value: 'weights' },
     { label: 'Yoga', value: 'yoga' },
   ]);
+
+  const [isSpecialChecked, setIsSpecialChecked] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
@@ -66,6 +68,7 @@ const EditActivityScreen = ({ route, navigation }) => {
 
     const durationInMinutes = parseFloat(duration);
     const isSpecial =
+    !isSpecialChecked &&
     (activityType === 'running' || activityType === 'weights') &&
     durationInMinutes > 60;
 
@@ -79,6 +82,7 @@ const EditActivityScreen = ({ route, navigation }) => {
 
     updateActivity(updatedActivity);
     Alert.alert('Success', 'Activity updated successfully.');
+    setIsSpecialChecked(false);
     navigation.goBack();
   };
 
@@ -184,16 +188,20 @@ const EditActivityScreen = ({ route, navigation }) => {
           />
         )}
 
-        {/* <View style={styles.checkboxContainer}>
-          <CheckBox
-            value={special}
-            onValueChange={setSpecial}
-            style={styles.checkbox}
-          />
-          <Text style={styles.label}>Special</Text>
-        </View> */}
       </View>
+      
+      {special && <View style={styles.section}>
+        <Text style={styles.paragraph}>This item is marked as special. Select the checkbox if you would like to approve it.</Text>
+        <Checkbox
+          style={styles.checkbox}
+          value={isSpecialChecked}
+          onValueChange={setIsSpecialChecked}
+          color={isSpecialChecked ? '#4630EB' : undefined}
+        />
+      </View>}
+
       <View style={styles.buttonContainer}>
+
         {!showDatePicker && (
           <PressableButton
             pressedFunction={() => navigation.goBack()}
@@ -210,6 +218,8 @@ const EditActivityScreen = ({ route, navigation }) => {
             <Text style={styles.buttonText}>Save</Text>
           </PressableButton>
         )}
+
+
       </View>
     </View>
   );
@@ -254,6 +264,19 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#D2C7E7",
     borderRadius: 7,
+  },
+  section: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical : 30,
+  },
+  paragraph: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  checkbox: {
+    marginLeft : 5,
   },
   buttonContainer: {
     flexDirection: "row",
