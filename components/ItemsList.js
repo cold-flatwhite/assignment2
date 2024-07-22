@@ -1,17 +1,27 @@
 import React from "react";
-import { FlatList, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import PressableButton from "./PressableButton";
+import { useNavigation } from '@react-navigation/native';
 
-const ItemsList = ({ data, navigation }) => {
+
+const ItemsList = ({ data}) => {
+  const navigation = useNavigation();
+
   const handlePress = (item) => {
-    console.log('Navigating to', item);
+    navigation.navigate("EditActivity", { item });
   };
 
   const renderItem = ({ item }) => (
     <PressableButton
       pressedFunction={() => handlePress(item)}
-      componentStyle = {styles.itemContainer}
+      componentStyle={styles.itemContainer}
     >
       <View style={styles.itemContent}>
         <Text style={styles.itemType}>{item.itemType}</Text>
@@ -50,8 +60,8 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   itemContent: {
-    flex : 1,
-    width : "100%",
+    flex: 1,
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -60,7 +70,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "white",
     fontWeight: "bold",
-    flex : 2,
+    flex: 2,
   },
   special: {
     flex: 1,
@@ -73,8 +83,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     fontWeight: "bold",
     padding: 5,
-    flex : 3,
-    textAlign : "center",
+    flex: 3,
+    textAlign: "center",
   },
   data: {
     fontSize: 12,
@@ -82,7 +92,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     padding: 5,
     marginLeft: 5,
-    flex : 2,
-    textAlign : "center",
+    flex: 2,
+    textAlign: "center",
   },
 });

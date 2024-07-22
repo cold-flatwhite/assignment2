@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Text, Alert, CheckBox } from 'react-native';
+import { StyleSheet, View, TextInput, Text, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import PressableButton from '../components/PressableButton'; // 确保路径正确
+import PressableButton from '../components/PressableButton'; // Ensure the path is correct
 import { useActivity } from '../components/ActivityContext';
 import { AntDesign } from '@expo/vector-icons';
+import CheckBox from '@react-native-community/checkbox'; // Updated import
 
 const EditActivityScreen = ({ route, navigation }) => {
   const { item } = route.params;
@@ -72,7 +73,6 @@ const EditActivityScreen = ({ route, navigation }) => {
       special: isSpecial,
     };
 
-    updateActivity(updatedActivity);
     setActivities(activities.map(act => (act.id === item.id ? updatedActivity : act)));
     Alert.alert('Success', 'Activity updated successfully.');
     navigation.goBack();
@@ -142,16 +142,14 @@ const EditActivityScreen = ({ route, navigation }) => {
           />
         )}
 
-        {special && (
-          <View style={styles.checkboxContainer}>
-            <CheckBox
-              value={special}
-              onValueChange={setSpecial}
-              style={styles.checkbox}
-            />
-            <Text style={styles.label}>Special</Text>
-          </View>
-        )}
+        {/* <View style={styles.checkboxContainer}>
+          <CheckBox
+            value={special}
+            onValueChange={setSpecial}
+            style={styles.checkbox}
+          />
+          <Text style={styles.label}>Special</Text>
+        </View> */}
       </View>
       <View style={styles.buttonContainer}>
         {!showDatePicker && (
@@ -175,73 +173,66 @@ const EditActivityScreen = ({ route, navigation }) => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#D2C7E7',
+    backgroundColor: "#D2C7E7",
   },
   contentContainer: {
     flex: 1,
-    justifyContent: 'center',
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingLeft: 10,
-    paddingRight: 10,
-    marginTop: 5,
-    marginBottom: 15,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-  },
-  dropDown: {
-    borderColor: 'gray',
-  },
-  dropDownContainer: {
-    height: 40,
+    justifyContent: "flex-start",
+    paddingTop: 25,
   },
   label: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+    color: "#333",
+    marginTop : 15,
+  },
+  dropDownContainer: {
+    marginBottom: 20,
+    zIndex: 1000,
+  },
+  dropDown: {
+    backgroundColor: "#fff",
+    borderColor: "#ccc",
+  },
+  input: {
+    height: 40,
+    borderColor: "#4A3C93",
+    borderWidth: 2,
+    paddingHorizontal: 10,
+    backgroundColor: "#D2C7E7",
+    justifyContent: "center",
+    borderRadius : 7,
   },
   datePicker: {
-    marginTop: 20,
-    alignSelf: 'center',
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  checkbox: {
-    alignSelf: 'center',
+    width: "100%",
+    backgroundColor: "#D2C7E7",
+    borderRadius: 7,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 70,
   },
   button: {
-    height: 40,
-    width: '48%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 55,
+    borderRadius: 5,
   },
   cancelButton: {
-    backgroundColor: '#999',
+    backgroundColor: "#B20000",
   },
   saveButton: {
-    backgroundColor: '#4A3C93',
+    backgroundColor: "#4A3C93",
   },
   buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  buttonStyle: {
-    marginRight: 15,
+    color: "#fff",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
 
