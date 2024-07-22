@@ -9,6 +9,9 @@ import CheckBox from '@react-native-community/checkbox'; // Updated import
 
 const EditActivityScreen = ({ route, navigation }) => {
   const { item } = route.params;
+  console.log({item});
+  const { addActivity, removeActivity } = useActivity();
+
   const { activities, setActivities } = useActivity();
   const [activityType, setActivityType] = useState(item.itemType);
   const [duration, setDuration] = useState(item.data.split(' ')[0]);
@@ -93,8 +96,7 @@ const EditActivityScreen = ({ route, navigation }) => {
   };
 
   const handleDelete = () => {
-    deleteActivity(item.id);
-    setActivities(activities.filter(act => act.id !== item.id));
+    removeActivity(item.id);
     Alert.alert('Success', 'Activity deleted successfully.');
     navigation.goBack();
   };
