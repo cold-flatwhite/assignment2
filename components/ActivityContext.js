@@ -19,8 +19,16 @@ export const ActivityProvider = ({ children }) => {
     );
   };
 
+  const updateActivity = (updatedActivity) => {
+    setActivities((prevActivities) =>
+      prevActivities.map((activity) =>
+        activity.id === updatedActivity.id ? updatedActivity : activity
+      )
+    );
+  };
+
   return (
-    <ActivityContext.Provider value={{ activities, addActivity, removeActivity }}>
+    <ActivityContext.Provider value={{ activities, addActivity, removeActivity, updateActivity }}>
       {children}
     </ActivityContext.Provider>
   );

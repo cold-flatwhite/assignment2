@@ -10,7 +10,7 @@ import CheckBox from '@react-native-community/checkbox'; // Updated import
 const EditActivityScreen = ({ route, navigation }) => {
   const { item } = route.params;
   console.log({item});
-  const { addActivity, removeActivity } = useActivity();
+  const { removeActivity, updateActivity} = useActivity();
 
   const { activities, setActivities } = useActivity();
   const [activityType, setActivityType] = useState(item.itemType);
@@ -66,17 +66,19 @@ const EditActivityScreen = ({ route, navigation }) => {
     }
 
     const durationInMinutes = parseFloat(duration);
-    const isSpecial = special;
+    const isSpecial =
+    (activityType === 'running' || activityType === 'weights') &&
+    durationInMinutes > 60;
 
     const updatedActivity = {
-      ...item,
+      id: item.id,
       itemType: activityType,
       data: `${duration} min`,
       date: date.toDateString(),
       special: isSpecial,
     };
 
-    setActivities(activities.map(act => (act.id === item.id ? updatedActivity : act)));
+    updateActivity(updatedActivity);
     Alert.alert('Success', 'Activity updated successfully.');
     navigation.goBack();
   };
