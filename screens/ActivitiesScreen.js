@@ -28,7 +28,7 @@ const ActivitiesScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ItemsList data={activities} />
+      <ItemsList data={activities} editScreen="EditActivity"/>
     </View>
   );
 };
