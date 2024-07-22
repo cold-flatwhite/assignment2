@@ -15,7 +15,9 @@ const ItemsList = ({ data, navigation }) => {
     >
       <View style={styles.itemContent}>
         <Text style={styles.itemType}>{item.itemType}</Text>
-        {item.special && <Entypo name="warning" size={24} color="yellow" />}
+        <View style={styles.special}>
+          {item.special && <Entypo name="warning" size={24} color="yellow" />}
+        </View>
         <Text style={styles.date}>{item.date}</Text>
         <Text style={styles.data}>{item.data}</Text>
       </View>
@@ -55,21 +57,32 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   itemType: {
-    fontSize: 16,
+    fontSize: 12,
     color: "white",
     fontWeight: "bold",
     flex : 2,
   },
+  special: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   date: {
-    fontSize: 16,
+    fontSize: 12,
     marginLeft: 5,
     backgroundColor: "white",
+    fontWeight: "bold",
     padding: 5,
+    flex : 3,
+    textAlign : "center",
   },
   data: {
-    fontSize: 16,
+    fontSize: 12,
     backgroundColor: "white",
+    fontWeight: "bold",
     padding: 5,
     marginLeft: 5,
+    flex : 2,
+    textAlign : "center",
   },
 });
