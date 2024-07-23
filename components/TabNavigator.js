@@ -8,31 +8,41 @@ import SettingsScreen from '../screens/SettingsScreen';
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Activities"
-        component={ActivitiesScreen}
-        options={{
-          tabBarIcon: () => <FontAwesome5 name="running" size={24} color="grey" />,
-        }}
-      />
-      <Tab.Screen
-        name="Diet"
-        component={DietScreen}
-        options={{
-          tabBarIcon: () => <Ionicons name="fast-food" size={24} color="grey" />,
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          tabBarIcon: () => <Ionicons name="settings" size={24} color="grey" />,
-        }}
-      />
-    </Tab.Navigator>
-  );
-};
-
-export default TabNavigator;
+    return (
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+  
+            if (route.name === 'Activities') {
+              iconName = 'running';
+              return <FontAwesome5 name={iconName} size={size} color={color} />;
+            } else if (route.name === 'Diet') {
+              iconName = 'fast-food';
+              return <Ionicons name={iconName} size={size} color={color} />;
+            } else if (route.name === 'Settings') {
+              iconName = 'settings';
+              return <Ionicons name={iconName} size={size} color={color} />;
+            }
+          },
+          tabBarActiveTintColor: 'gold',
+          tabBarInactiveTintColor: 'grey',
+        })}
+      >
+        <Tab.Screen
+          name="Activities"
+          component={ActivitiesScreen}
+        />
+        <Tab.Screen
+          name="Diet"
+          component={DietScreen}
+        />
+        <Tab.Screen
+          name="Settings"
+          component={SettingsScreen}
+        />
+      </Tab.Navigator>
+    );
+  };
+  
+  export default TabNavigator;
