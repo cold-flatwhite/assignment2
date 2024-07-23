@@ -9,7 +9,6 @@ import Checkbox from 'expo-checkbox';
 
 const EditActivityScreen = ({ route, navigation }) => {
   const { item } = route.params;
-  console.log({item});
   const { removeActivity, updateActivity} = useActivity();
 
   const [activityType, setActivityType] = useState(item.itemType);
@@ -230,7 +229,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#D2C7E7",
   },
   contentContainer: {
     flex: 1,

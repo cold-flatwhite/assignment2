@@ -131,7 +131,6 @@ const AddDietScreen = ({navigation}) => {
     container: {
       flex: 1,
       padding: 20,
-      backgroundColor: "#D2C7E7",
     },
     contentContainer: {
       flex: 1,

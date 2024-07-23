@@ -17,11 +17,11 @@ const AppContent = () => {
   return (
     <NavigationContainer theme={navigationTheme}>
       <Stack.Navigator>
-        <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
-        <Stack.Screen name="AddActivity" component={AddActivityScreen} />
+        <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="AddActivity" component={AddActivityScreen}/>
         <Stack.Screen name="AddDiet" component={AddDietScreen} />
-        <Stack.Screen name="EditActivity" component={EditActivityScreen} options={{ title: "Edit Activity" }} />
-        <Stack.Screen name="EditDiet" component={EditDietScreen} options={{ title: "Edit Diet" }} />
+        <Stack.Screen name="EditActivity" component={EditActivityScreen} />
+        <Stack.Screen name="EditDiet" component={EditDietScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

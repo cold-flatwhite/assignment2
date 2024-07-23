@@ -8,7 +8,6 @@ import { AntDesign } from '@expo/vector-icons';
 
 const EditDietScreen = ({route, navigation}) => {
     const {item} = route.params;
-    console.log(item);
 
     const { removeDiet, updateDiet} = useDiet();
     const [dietDescription, setdietDescription] = useState(item.itemType);
@@ -194,7 +193,6 @@ const EditDietScreen = ({route, navigation}) => {
     container: {
       flex: 1,
       padding: 20,
-      backgroundColor: "#D2C7E7",
     },
     contentContainer: {
       flex: 1,
