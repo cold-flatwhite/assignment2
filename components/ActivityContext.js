@@ -10,7 +10,7 @@ export const ActivityProvider = ({ children }) => {
 
   ]);
   const addActivity = (activity) => {
-    setActivities((preActivitites) => [...preActivitites, activity]);
+    setActivities(activity);
   };
 
   const removeActivity = (id) => {
@@ -25,7 +25,7 @@ export const ActivityProvider = ({ children }) => {
         activity.id === updatedActivity.id ? updatedActivity : activity
       )
     );
-  };
+  }; 
 
   return (
     <ActivityContext.Provider value={{ activities, addActivity, removeActivity, updateActivity }}>

@@ -8,45 +8,32 @@ import {
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import PressableButton from "./PressableButton";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import stylesHelper from "../styles/stylesHelper";
 
-const ItemsList = ({ data, editScreen}) => {
+const ItemsList = ({ item, editNavigateHandler}) => {
   const navigation = useNavigation();
-  
-  const handlePress = (item) => {
-    console.log(item);
-    navigation.navigate(editScreen, { item });
-  };
-
-  const renderItem = ({ item }) => (
-    <PressableButton
-      pressedFunction={() => handlePress(item)}
-      componentStyle={styles.itemContainer}
-    >
-      <View style={styles.itemContent}>
-        <Text style={styles.itemType}>{item.itemType}</Text>
-        <View style={styles.special}>
-          {item.special && <Entypo name="warning" size={24} color="yellow" />}
-        </View>
-        <Text style={styles.date}>{item.date}</Text>
-        <Text style={styles.data}>{item.data}</Text>
-      </View>
-    </PressableButton>
-  );
 
   return (
-    <FlatList
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.list}
-    />
+    <View key={item.id} style={styles.itemContainer}>
+      <PressableButton
+        pressedFunction={() => editNavigateHandler(item)}
+        componentStyle={styles.buttonStyle}
+      >
+        <View style={styles.itemContent}>
+          <Text style={styles.itemType}>{item.itemType}</Text>
+          <View style={styles.special}>
+            {item.special && <Entypo name="warning" size={24} color="yellow" />}
+          </View>
+          <Text style={styles.date}>{item.date}</Text>
+          <Text style={styles.data}>{item.data}</Text>
+        </View>
+      </PressableButton>
+    </View>
   );
 };
 
 export default ItemsList;
-
 
 const styles = StyleSheet.create({
   list: {
@@ -56,9 +43,13 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     backgroundColor: stylesHelper.colors.primary,
+    marginTop : stylesHelper.spacing.small,
+    width : stylesHelper.dimensions.widthFull,
+  },
+  buttonStyle : {
+    backgroundColor: stylesHelper.colors.primary,
     padding: stylesHelper.spacing.small,
     borderRadius: stylesHelper.borderRadius.medium,
-    marginBottom: stylesHelper.spacing.small,
     width: stylesHelper.dimensions.widthFull,
   },
   itemContent: {
@@ -98,4 +89,3 @@ const styles = StyleSheet.create({
     textAlign: stylesHelper.textAlign.center,
   },
 });
-

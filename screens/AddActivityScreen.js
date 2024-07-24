@@ -9,6 +9,8 @@ import Checkbox from "expo-checkbox";
 import stylesHelper from "../styles/stylesHelper";
 import { writeToDB } from "../Firebase/firestoreHelper";
 import { database } from "../Firebase/firebaseSetup";
+import { deleteFromDb } from "../Firebase/firestoreHelper";
+import { doc, onSnapshot } from "firebase/firestore";
 
 const AddActivityScreen = ({ route, navigation }) => {
   const { item } = route.params || {};
@@ -76,7 +78,6 @@ const AddActivityScreen = ({ route, navigation }) => {
       durationInMinutes > 60;
 
     const activity = {
-      id: item ? item.id : Date.now(),
       itemType: activityType,
       data: `${duration} min`,
       date: date.toDateString(),
@@ -88,7 +89,6 @@ const AddActivityScreen = ({ route, navigation }) => {
       Alert.alert("Success", "Activity updated successfully.");
     } else {
       writeToDB(activity, "activities")
-      addActivity(activity);
       Alert.alert("Success", "Activity added successfully.");
     }
 
@@ -111,7 +111,7 @@ const AddActivityScreen = ({ route, navigation }) => {
 
   const handleDelete = () => {
     if (item) {
-      removeActivity(item.id);
+      deleteFromDb(item.id, "activities");
       Alert.alert("Success", "Activity deleted successfully.");
       navigation.goBack();
     }
