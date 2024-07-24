@@ -8,7 +8,7 @@ import { AntDesign } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 
 const AddActivityScreen = ({ route, navigation }) => {
-  const { item } = route.params || {}; // Handle if no item is passed (i.e., add mode)
+  const { item } = route.params || {}; 
   const { addActivity, updateActivity, removeActivity } = useActivity();
 
   const [activityType, setActivityType] = useState(item ? item.itemType : null);
@@ -28,6 +28,7 @@ const AddActivityScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     navigation.setOptions({
+      title: 'Edit',
       headerRight: () => (
         item ? (
           <PressableButton

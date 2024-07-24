@@ -7,14 +7,14 @@ import { AntDesign } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 
 const DietScreen = ({ route, navigation }) => {
-  const { item } = route.params || {}; // item 为 undefined 时处理添加模式
+  const { item } = route.params || {}; 
 
   const { addDiet, removeDiet, updateDiet } = useDiet();
   const [dietDescription, setDietDescription] = useState(
     item ? item.itemType : ""
   );
   const [calories, setCalories] = useState(item ? item.data : "");
-  const [date, setDate] = useState(item ? new Date(item.date) : new Date());
+  const [date, setDate] = useState(item ? new Date(item.date) : null);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [special, setSpecial] = useState(item ? item.special : false);
   const [isSpecialChecked, setIsSpecialChecked] = useState(false);
@@ -22,6 +22,7 @@ const DietScreen = ({ route, navigation }) => {
   useEffect(() => {
     if (item) {
       navigation.setOptions({
+        title: 'Edit',
         headerRight: () => (
           <PressableButton
             componentStyle={styles.buttonStyle}
