@@ -7,7 +7,7 @@ import { useActivity } from '../components/ActivityContext';
 import { AntDesign } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 
-const ActivityScreen = ({ route, navigation }) => {
+const AddActivityScreen = ({ route, navigation }) => {
   const { item } = route.params || {}; // Handle if no item is passed (i.e., add mode)
   const { addActivity, updateActivity, removeActivity } = useActivity();
 
@@ -301,4 +301,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ActivityScreen;
+export default AddActivityScreen;

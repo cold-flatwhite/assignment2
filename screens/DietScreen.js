@@ -26,7 +26,7 @@ const DietScreen = ({ navigation }) => {
   }, [navigation]);
   return (
     <View style={styles.container}>
-      <ItemsList data={diets} editScreen = "EditDiet"/>
+      <ItemsList data={diets} editScreen = "AddDiet"/>
     </View>
   );
 };

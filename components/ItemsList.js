@@ -16,7 +16,7 @@ const ItemsList = ({ data, editScreen}) => {
   
   const handlePress = (item) => {
     console.log(item);
-    navigation.navigate("AddActivity", { item });
+    navigation.navigate(editScreen, { item });
   };
 
   const renderItem = ({ item }) => (
