@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import stylesHelper from "../styles/stylesHelper";
 
 const PressableButton = ({ children, pressedFunction, componentStyle }) => {
   return (
@@ -18,9 +19,9 @@ export default PressableButton;
 
 const styles = StyleSheet.create({
     pressableStyle: {
-        opacity: 0.5,
+        opacity: stylesHelper.opacity.low,
       },
     defaultStyle : {
-        padding : 5,
+        padding : stylesHelper.spacing.extraSmall,
     }
 });

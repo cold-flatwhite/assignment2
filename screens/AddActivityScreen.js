@@ -1,62 +1,63 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Text, Alert } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import PressableButton from '../components/PressableButton';
-import { useActivity } from '../components/ActivityContext';
-import { AntDesign } from '@expo/vector-icons';
-import Checkbox from 'expo-checkbox';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, TextInput, Text, Alert } from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import PressableButton from "../components/PressableButton";
+import { useActivity } from "../components/ActivityContext";
+import { AntDesign } from "@expo/vector-icons";
+import Checkbox from "expo-checkbox";
+import stylesHelper from "../styles/stylesHelper";
 
 const AddActivityScreen = ({ route, navigation }) => {
-  const { item } = route.params || {}; 
+  const { item } = route.params || {};
   const { addActivity, updateActivity, removeActivity } = useActivity();
 
   const [activityType, setActivityType] = useState(item ? item.itemType : null);
-  const [duration, setDuration] = useState(item ? item.data.split(' ')[0] : '');
+  const [duration, setDuration] = useState(item ? item.data.split(" ")[0] : "");
   const [date, setDate] = useState(item ? new Date(item.date) : null);
   const [open, setOpen] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [special, setSpecial] = useState(item ? item.special : false);
   const [isSpecialChecked, setIsSpecialChecked] = useState(false);
   const [items, setItems] = useState([
-    { label: 'Walking', value: 'walking' },
-    { label: 'Running', value: 'running' },
-    { label: 'Swimming', value: 'swimming' },
-    { label: 'Weights', value: 'weights' },
-    { label: 'Yoga', value: 'yoga' },
+    { label: "Walking", value: "walking" },
+    { label: "Running", value: "running" },
+    { label: "Swimming", value: "swimming" },
+    { label: "Weights", value: "weights" },
+    { label: "Yoga", value: "yoga" },
   ]);
 
   useEffect(() => {
-    navigation.setOptions({
-      title: 'Edit',
-      headerRight: () => (
-        item ? (
+    if (item) {
+      navigation.setOptions({
+        title: "Edit",
+        headerRight: () => (
           <PressableButton
             componentStyle={styles.buttonStyle}
             pressedFunction={confirmDelete}
           >
             <AntDesign name="delete" size={24} color="white" />
           </PressableButton>
-        ) : null
-      ),
-    });
+        ),
+      });
+    }
   }, [navigation, item]);
 
   const validateInputs = () => {
     if (!activityType) {
-      Alert.alert('Invalid Input', 'Please select an activity.');
+      Alert.alert("Invalid Input", "Please select an activity.");
       return false;
     }
     if (!duration) {
-      Alert.alert('Invalid Input', 'Please enter a duration.');
+      Alert.alert("Invalid Input", "Please enter a duration.");
       return false;
     }
     if (isNaN(duration) || parseFloat(duration) <= 0) {
-      Alert.alert('Invalid Input', 'Please enter a valid duration.');
+      Alert.alert("Invalid Input", "Please enter a valid duration.");
       return false;
     }
     if (!date) {
-      Alert.alert('Invalid Input', 'Please enter a valid date.');
+      Alert.alert("Invalid Input", "Please enter a valid date.");
       return false;
     }
     return true;
@@ -68,9 +69,9 @@ const AddActivityScreen = ({ route, navigation }) => {
     }
 
     const durationInMinutes = parseFloat(duration);
-    const isSpecial = 
+    const isSpecial =
       !isSpecialChecked &&
-      (activityType === 'running' || activityType === 'weights') &&
+      (activityType === "running" || activityType === "weights") &&
       durationInMinutes > 60;
 
     const activity = {
@@ -81,13 +82,12 @@ const AddActivityScreen = ({ route, navigation }) => {
       special: isSpecial,
     };
 
-
     if (item) {
       updateActivity(activity);
-      Alert.alert('Success', 'Activity updated successfully.');
+      Alert.alert("Success", "Activity updated successfully.");
     } else {
       addActivity(activity);
-      Alert.alert('Success', 'Activity added successfully.');
+      Alert.alert("Success", "Activity added successfully.");
     }
 
     navigation.goBack();
@@ -110,23 +110,25 @@ const AddActivityScreen = ({ route, navigation }) => {
   const handleDelete = () => {
     if (item) {
       removeActivity(item.id);
-      Alert.alert('Success', 'Activity deleted successfully.');
+      Alert.alert("Success", "Activity deleted successfully.");
       navigation.goBack();
     }
   };
 
   const confirmSave = () => {
     Alert.alert(
-      'Save',
-      `Are you sure you want to ${item ? 'save changes' : 'add this activity'}?`,
+      "Save",
+      `Are you sure you want to ${
+        item ? "save changes" : "add this activity"
+      }?`,
       [
         {
-          text: 'No',
+          text: "No",
           onPress: () => {},
-          style: 'cancel',
+          style: "cancel",
         },
         {
-          text: 'Yes',
+          text: "Yes",
           onPress: saveActivity,
         },
       ],
@@ -136,16 +138,16 @@ const AddActivityScreen = ({ route, navigation }) => {
 
   const confirmDelete = () => {
     Alert.alert(
-      'Delete',
-      'Are you sure you want to delete this item?',
+      "Delete",
+      "Are you sure you want to delete this item?",
       [
         {
-          text: 'No',
+          text: "No",
           onPress: () => {},
-          style: 'cancel',
+          style: "cancel",
         },
         {
-          text: 'Yes',
+          text: "Yes",
           onPress: handleDelete,
         },
       ],
@@ -181,8 +183,8 @@ const AddActivityScreen = ({ route, navigation }) => {
           pressedFunction={handleDatePicker}
           componentStyle={styles.input}
         >
-          <Text style={{ color: date ? '#000' : '#aaa' }}>
-            {date ? date.toDateString() : ''}
+          <Text style={{ color: date ? "#000" : "#aaa" }}>
+            {date ? date.toDateString() : ""}
           </Text>
         </PressableButton>
 
@@ -196,16 +198,21 @@ const AddActivityScreen = ({ route, navigation }) => {
           />
         )}
       </View>
-      
-      {!showDatePicker && special && <View style={styles.section}>
-        <Text style={styles.paragraph}>This item is marked as special. Select the checkbox if you would like to approve it.</Text>
-        <Checkbox
-          style={styles.checkbox}
-          value={isSpecialChecked}
-          onValueChange={setIsSpecialChecked}
-          color={isSpecialChecked ? '#4630EB' : undefined}
-        />
-      </View>}
+
+      {!showDatePicker && special && (
+        <View style={styles.section}>
+          <Text style={styles.paragraph}>
+            This item is marked as special. Select the checkbox if you would
+            like to approve it.
+          </Text>
+          <Checkbox
+            style={styles.checkbox}
+            value={isSpecialChecked}
+            onValueChange={setIsSpecialChecked}
+            color={isSpecialChecked ? stylesHelper.colors.checkbox : undefined}
+          />
+        </View>
+      )}
 
       <View style={styles.buttonContainer}>
         {!showDatePicker && (
@@ -228,77 +235,76 @@ const AddActivityScreen = ({ route, navigation }) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20,
+    flex: stylesHelper.flexSize.small,
+    padding: stylesHelper.spacing.medium,
   },
   contentContainer: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    paddingTop: 25,
+    flex: stylesHelper.flexSize.small,
+    justifyContent: stylesHelper.justifyContent.flexStart,
+    paddingTop: stylesHelper.spacing.medium,
   },
   label: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-    marginTop: 15,
+    fontSize: stylesHelper.fontSizes.medium,
+    fontWeight: stylesHelper.fontWeights.bold,
+    color: stylesHelper.colors.text,
+    marginTop: stylesHelper.spacing.small,
   },
   dropDownContainer: {
-    marginBottom: 20,
-    zIndex: 1000,
+    marginBottom: stylesHelper.spacing.medium,
+    zIndex: stylesHelper.zIndex.high,
   },
   dropDown: {
-    backgroundColor: '#fff',
-    borderColor: '#ccc',
+    backgroundColor: stylesHelper.colors.white,
+    borderColor: stylesHelper.colors.border,
   },
   input: {
-    height: 40,
-    borderColor: '#4A3C93',
-    borderWidth: 2,
-    paddingHorizontal: 10,
-    backgroundColor: '#D2C7E7',
-    justifyContent: 'center',
-    borderRadius: 7,
+    height: stylesHelper.dimensions.heightSmall,
+    borderColor: stylesHelper.colors.primary,
+    borderWidth: stylesHelper.borderWidths.thin,
+    paddingHorizontal: stylesHelper.spacing.small,
+    backgroundColor: stylesHelper.colors.secondary,
+    justifyContent: stylesHelper.alignItems.center,
+    borderRadius: stylesHelper.borderRadius.medium,
   },
   datePicker: {
-    width: '100%',
-    backgroundColor: '#D2C7E7',
-    borderRadius: 7,
+    width: stylesHelper.dimensions.widthFull,
+    backgroundColor: stylesHelper.colors.secondary,
+    borderRadius: stylesHelper.borderRadius.medium,
   },
   section: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 30,
+    flexDirection: stylesHelper.flex.row,
+    alignItems: stylesHelper.alignItems.center,
+    paddingVertical: stylesHelper.spacing.large,
   },
   paragraph: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: stylesHelper.fontSizes.small,
+    fontWeight: stylesHelper.fontWeights.bold,
+    color: stylesHelper.colors.text,
   },
   checkbox: {
-    marginLeft: 5,
+    marginLeft: stylesHelper.spacing.extraSmall,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 70,
+    flexDirection: stylesHelper.flex.row,
+    justifyContent: stylesHelper.justifyContent.spaceBetween,
+    marginBottom: stylesHelper.spacing.large,
   },
   button: {
-    paddingVertical: 10,
-    paddingHorizontal: 55,
-    borderRadius: 5,
+    paddingVertical: stylesHelper.spacing.small,
+    paddingHorizontal: stylesHelper.spacing.extraLarge,
+    borderRadius: stylesHelper.borderRadius.small,
   },
   cancelButton: {
-    backgroundColor: "#B20000",
+    backgroundColor: stylesHelper.colors.danger,
   },
   saveButton: {
-    backgroundColor: "#4A3C93",
+    backgroundColor: stylesHelper.colors.primary,
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 16,
+    color: stylesHelper.colors.white,
+    fontSize: stylesHelper.fontSizes.medium,
   },
 });
 

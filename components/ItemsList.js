@@ -9,7 +9,7 @@ import {
 import { Entypo } from "@expo/vector-icons";
 import PressableButton from "./PressableButton";
 import { useNavigation } from '@react-navigation/native';
-
+import stylesHelper from "../styles/stylesHelper";
 
 const ItemsList = ({ data, editScreen}) => {
   const navigation = useNavigation();
@@ -47,53 +47,55 @@ const ItemsList = ({ data, editScreen}) => {
 
 export default ItemsList;
 
+
 const styles = StyleSheet.create({
   list: {
-    paddingBottom: 20,
-    marginVertical: 15,
-    alignItems: "center",
+    paddingBottom: stylesHelper.spacing.medium,
+    marginVertical: stylesHelper.spacing.medium,
+    alignItems: stylesHelper.alignItems.center,
   },
   itemContainer: {
-    backgroundColor: "#4A3C93",
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 10,
-    width: "90%",
+    backgroundColor: stylesHelper.colors.primary,
+    padding: stylesHelper.spacing.small,
+    borderRadius: stylesHelper.borderRadius.medium,
+    marginBottom: stylesHelper.spacing.small,
+    width: stylesHelper.dimensions.widthFull,
   },
   itemContent: {
-    flex: 1,
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flex: stylesHelper.flexSize.small,
+    width: stylesHelper.dimensions.widthFull,
+    flexDirection: stylesHelper.flex.row,
+    alignItems: stylesHelper.alignItems.center,
+    justifyContent: stylesHelper.justifyContent.spaceBetween,
   },
   itemType: {
-    fontSize: 12,
-    color: "white",
-    fontWeight: "bold",
-    flex: 2,
+    fontSize: stylesHelper.fontSizes.extraSmall,
+    color: stylesHelper.colors.white,
+    fontWeight: stylesHelper.fontWeights.bold,
+    flex: stylesHelper.flexSize.medium,
   },
   special: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    flex: stylesHelper.flexSize.small,
+    justifyContent: stylesHelper.justifyContent.center,
+    alignItems: stylesHelper.alignItems.center,
   },
   date: {
-    fontSize: 11,
-    marginLeft: 5,
-    backgroundColor: "white",
-    fontWeight: "bold",
-    padding: 5,
-    flex: 3,
-    textAlign: "center",
+    fontSize: stylesHelper.fontSizes.extraSmall,
+    marginLeft: stylesHelper.spacing.extraSmall,
+    backgroundColor: stylesHelper.colors.white,
+    fontWeight: stylesHelper.fontWeights.bold,
+    padding: stylesHelper.spacing.extraSmall,
+    flex: stylesHelper.flexSize.large,
+    textAlign: stylesHelper.textAlign.center,
   },
   data: {
-    fontSize: 11,
-    backgroundColor: "white",
-    fontWeight: "bold",
-    padding: 5,
-    marginLeft: 5,
-    flex: 2,
-    textAlign: "center",
+    fontSize: stylesHelper.fontSizes.extraSmall,
+    backgroundColor: stylesHelper.colors.white,
+    fontWeight: stylesHelper.fontWeights.bold,
+    padding: stylesHelper.spacing.extraSmall,
+    marginLeft: stylesHelper.spacing.extraSmall,
+    flex: stylesHelper.flexSize.medium,
+    textAlign: stylesHelper.textAlign.center,
   },
 });
+

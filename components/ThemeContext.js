@@ -1,26 +1,27 @@
 import React, { createContext, useState, useContext } from "react";
 import { DefaultTheme, DarkTheme } from "@react-navigation/native";
+import stylesHelper from "../styles/stylesHelper";
 
 const ThemeContext = createContext();
 
 export const useThemes = () => useContext(ThemeContext);
 
 const baseThemeValues = {
-  buttonBackground: "#4A3C93",
-  buttonText: "#ffffff",
-  headerBackground: "#4A3C93",
-  headerText: "#ffffff",
+  buttonBackground: stylesHelper.themes.commonButtonBackground,
+  buttonText: stylesHelper.themes.commonButtonText,
+  headerBackground: stylesHelper.themes.commonHeaderBackground,
+  headerText: stylesHelper.themes.commonHeaderText,
 };
 
 const lightThemeValues = {
-  background: "#D2C7E7",
-  text: "white",
+  background: stylesHelper.themes.lightBackground,
+  text: stylesHelper.themes.lightText,
   ...baseThemeValues,
 };
 
 const darkThemeValues = {
-  background: "#B3A2D0",
-  text: "black",
+  background: stylesHelper.themes.darkBackground,
+  text: stylesHelper.themes.darkText,
   ...baseThemeValues,
 };
 

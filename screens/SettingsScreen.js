@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import PressableButton from '../components/PressableButton';
 import { useThemes } from '../components/ThemeContext';
+import stylesHelper from '../styles/stylesHelper';
 
 const SettingsScreen = () => {
   const {toggleTheme} = useThemes();
@@ -22,18 +23,18 @@ export default SettingsScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    },
+    flex: stylesHelper.flexSize.small,
+    justifyContent: stylesHelper.justifyContent.center,
+    alignItems: stylesHelper.alignItems.center,
+  },
   button: {
-    padding: 10,
-    borderRadius: 5,
-    backgroundColor: "#4A3C93",
+    padding: stylesHelper.spacing.small,
+    borderRadius: stylesHelper.borderRadius.small,
+    backgroundColor: stylesHelper.colors.primary,
   },
   buttonText: {
-    color: "#fff",
-    textAlign: "center",
-    fontWeight: "bold",
+    color: stylesHelper.colors.white,
+    textAlign: stylesHelper.textAlign.center,
+    fontWeight: stylesHelper.fontWeights.bold,
   },
 });

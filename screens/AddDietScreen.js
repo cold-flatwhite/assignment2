@@ -5,6 +5,7 @@ import PressableButton from "../components/PressableButton";
 import { useDiet } from "../components/DietContext";
 import { AntDesign } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
+import stylesHelper from "../styles/stylesHelper";
 
 const DietScreen = ({ route, navigation }) => {
   const { item } = route.params || {}; 
@@ -193,7 +194,7 @@ const DietScreen = ({ route, navigation }) => {
             style={styles.checkbox}
             value={isSpecialChecked}
             onValueChange={setIsSpecialChecked}
-            color={isSpecialChecked ? "#4630EB" : undefined}
+            color={isSpecialChecked ? stylesHelper.colors.checkbox : undefined}
           />
         </View>
       )}
@@ -222,71 +223,71 @@ const DietScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20,
+    flex: stylesHelper.flexSize.medium,
+    padding: stylesHelper.spacing.medium,
   },
   contentContainer: {
-    flex: 1,
-    justifyContent: "flex-start",
-    paddingTop: 10,
+    flex: stylesHelper.flexSize.medium,
+    justifyContent: stylesHelper.justifyContent.flexStart,
+    paddingTop: stylesHelper.spacing.small,
   },
   label: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-    marginTop: 15,
+    fontSize: stylesHelper.fontSizes.medium,
+    fontWeight: stylesHelper.fontWeights.bold,
+    color: stylesHelper.colors.text,
+    marginTop: stylesHelper.spacing.medium,
   },
   input: {
-    height: 40,
-    borderColor: "#4A3C93",
-    borderWidth: 2,
-    paddingHorizontal: 10,
-    backgroundColor: "#D2C7E7",
-    justifyContent: "center",
-    borderRadius: 10,
+    height: stylesHelper.dimensions.heightSmall,
+    borderColor: stylesHelper.colors.primary,
+    borderWidth: stylesHelper.borderWidths.thin,
+    paddingHorizontal: stylesHelper.spacing.small,
+    backgroundColor: stylesHelper.colors.secondary,
+    justifyContent: stylesHelper.alignItems.center,
+    borderRadius: stylesHelper.borderRadius.medium,
   },
   datePicker: {
-    width: "100%",
-    backgroundColor: "#D2C7E7",
-    borderRadius: 7,
+    width: stylesHelper.dimensions.widthFull,
+    backgroundColor: stylesHelper.colors.secondary,
+    borderRadius: stylesHelper.borderRadius.small,
   },
   section: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 30,
+    flexDirection: stylesHelper.flex.row,
+    alignItems: stylesHelper.alignItems.center,
+    paddingVertical: stylesHelper.spacing.large,
   },
   paragraph: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: stylesHelper.fontSizes.small,
+    fontWeight: stylesHelper.fontWeights.bold,
+    color: stylesHelper.colors.text,
   },
   checkbox: {
-    marginLeft: 5,
+    marginLeft: stylesHelper.spacing.extraSmall,
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 70,
+    flexDirection: stylesHelper.flex.row,
+    justifyContent: stylesHelper.justifyContent.spaceBetween,
+    marginBottom: stylesHelper.spacing.large,
   },
   button: {
-    paddingVertical: 10,
-    paddingHorizontal: 55,
-    borderRadius: 5,
+    paddingVertical: stylesHelper.spacing.small,
+    paddingHorizontal: stylesHelper.spacing.extraLarge,
+    borderRadius: stylesHelper.borderRadius.small,
   },
   cancelButton: {
-    backgroundColor: "#B20000",
+    backgroundColor: stylesHelper.colors.danger,
   },
   saveButton: {
-    backgroundColor: "#4A3C93",
+    backgroundColor: stylesHelper.colors.primary,
   },
   buttonText: {
-    color: "#fff",
-    textAlign: "center",
-    fontWeight: "bold",
+    color: stylesHelper.colors.white,
+    textAlign: stylesHelper.textAlign.center,
+    fontWeight: stylesHelper.fontWeights.bold,
   },
   multilineInput: {
-    height: 100,
-    textAlignVertical: "top",
+    height: stylesHelper.dimensions.heightMedium,
+    textAlignVertical: stylesHelper.textAlignVertical.top,
   },
 });
 

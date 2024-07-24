@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import PressableButton from "../components/PressableButton";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { useDiet } from "../components/DietContext";
+import stylesHelper from "../styles/stylesHelper";
 
 const DietScreen = ({ navigation }) => {
   const {diets} = useDiet();
@@ -33,18 +34,18 @@ const DietScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 10,
+    flex: stylesHelper.flexSize.medium,
+    padding: stylesHelper.spacing.small,
   },
   iconContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: stylesHelper.flex.row,
+    alignItems: stylesHelper.alignItems.center,
   },
   buttonStyle: {
-    marginRight: 5,
-    padding: 5,
-    alignContent: "center",
-    justifyContent: "center",
+    marginRight: stylesHelper.spacing.small,
+    padding: stylesHelper.spacing.small,
+    alignContent: stylesHelper.alignItems.center,
+    justifyContent: stylesHelper.justifyContent.center,
   },
 });
 
