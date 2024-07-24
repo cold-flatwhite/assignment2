@@ -6,6 +6,7 @@ import { useDiet } from "../components/DietContext";
 import { AntDesign } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import stylesHelper from "../styles/stylesHelper";
+import { writeToDB } from "../Firebase/firestoreHelper";
 
 const DietScreen = ({ route, navigation }) => {
   const { item } = route.params || {}; 
@@ -76,6 +77,7 @@ const DietScreen = ({ route, navigation }) => {
       updateDiet(newDiet);
       Alert.alert("Success", "Diet updated successfully.");
     } else {
+      writeToDB(newDiet,"diets");
       addDiet(newDiet);
       Alert.alert("Success", "Diet added successfully.");
     }

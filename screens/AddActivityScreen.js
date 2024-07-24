@@ -7,6 +7,8 @@ import { useActivity } from "../components/ActivityContext";
 import { AntDesign } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import stylesHelper from "../styles/stylesHelper";
+import { writeToDB } from "../Firebase/firestoreHelper";
+import { database } from "../Firebase/firebaseSetup";
 
 const AddActivityScreen = ({ route, navigation }) => {
   const { item } = route.params || {};
@@ -67,7 +69,6 @@ const AddActivityScreen = ({ route, navigation }) => {
     if (!validateInputs()) {
       return;
     }
-
     const durationInMinutes = parseFloat(duration);
     const isSpecial =
       !isSpecialChecked &&
@@ -86,6 +87,7 @@ const AddActivityScreen = ({ route, navigation }) => {
       updateActivity(activity);
       Alert.alert("Success", "Activity updated successfully.");
     } else {
+      writeToDB(activity, "activities")
       addActivity(activity);
       Alert.alert("Success", "Activity added successfully.");
     }
