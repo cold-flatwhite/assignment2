@@ -15,7 +15,8 @@ const ItemsList = ({ data, editScreen}) => {
   const navigation = useNavigation();
   
   const handlePress = (item) => {
-    navigation.navigate(editScreen, { item });
+    console.log(item);
+    navigation.navigate("AddActivity", { item });
   };
 
   const renderItem = ({ item }) => (
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   date: {
-    fontSize: 12,
+    fontSize: 11,
     marginLeft: 5,
     backgroundColor: "white",
     fontWeight: "bold",
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   data: {
-    fontSize: 12,
+    fontSize: 11,
     backgroundColor: "white",
     fontWeight: "bold",
     padding: 5,

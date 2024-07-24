@@ -1,40 +1,61 @@
-import React, { useState } from "react";
-import { StyleSheet, View, TextInput, Text, Alert } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import PressableButton from "../components/PressableButton";
-import { useActivity } from "../components/ActivityContext";
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, TextInput, Text, Alert } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import PressableButton from '../components/PressableButton';
+import { useActivity } from '../components/ActivityContext';
+import { AntDesign } from '@expo/vector-icons';
+import Checkbox from 'expo-checkbox';
 
-const AddActivityScreen = ({ navigation }) => {
-  const { addActivity } = useActivity();
-  const [activityType, setActivityType] = useState(null);
-  const [duration, setDuration] = useState("");
-  const [date, setDate] = useState(null);
+const ActivityScreen = ({ route, navigation }) => {
+  const { item } = route.params || {}; // Handle if no item is passed (i.e., add mode)
+  const { addActivity, updateActivity, removeActivity } = useActivity();
+
+  const [activityType, setActivityType] = useState(item ? item.itemType : null);
+  const [duration, setDuration] = useState(item ? item.data.split(' ')[0] : '');
+  const [date, setDate] = useState(item ? new Date(item.date) : null);
   const [open, setOpen] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [special, setSpecial] = useState(item ? item.special : false);
+  const [isSpecialChecked, setIsSpecialChecked] = useState(false);
   const [items, setItems] = useState([
-    { label: "Walking", value: "walking" },
-    { label: "Running", value: "running" },
-    { label: "Swimming", value: "swimming" },
-    { label: "Weights", value: "weights" },
-    { label: "Yoga", value: "yoga" },
+    { label: 'Walking', value: 'walking' },
+    { label: 'Running', value: 'running' },
+    { label: 'Swimming', value: 'swimming' },
+    { label: 'Weights', value: 'weights' },
+    { label: 'Yoga', value: 'yoga' },
   ]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        item ? (
+          <PressableButton
+            componentStyle={styles.buttonStyle}
+            pressedFunction={confirmDelete}
+          >
+            <AntDesign name="delete" size={24} color="white" />
+          </PressableButton>
+        ) : null
+      ),
+    });
+  }, [navigation, item]);
 
   const validateInputs = () => {
     if (!activityType) {
-      Alert.alert("Invalid Input", "Please select an activity.");
+      Alert.alert('Invalid Input', 'Please select an activity.');
       return false;
     }
     if (!duration) {
-      Alert.alert("Invalid Input", "Please enter a duration.");
+      Alert.alert('Invalid Input', 'Please enter a duration.');
       return false;
     }
     if (isNaN(duration) || parseFloat(duration) <= 0) {
-      Alert.alert("Invalid Input", "Please enter a valid duration.");
+      Alert.alert('Invalid Input', 'Please enter a valid duration.');
       return false;
     }
     if (!date) {
-      Alert.alert("Invalid Input", "Please enter a valid date.");
+      Alert.alert('Invalid Input', 'Please enter a valid date.');
       return false;
     }
     return true;
@@ -46,18 +67,28 @@ const AddActivityScreen = ({ navigation }) => {
     }
 
     const durationInMinutes = parseFloat(duration);
-    const isSpecial =
-      (activityType === "running" || activityType === "weights") &&
+    const isSpecial = 
+      !isSpecialChecked &&
+      (activityType === 'running' || activityType === 'weights') &&
       durationInMinutes > 60;
 
-    const newActivity = {
-      id: Date.now(),
+    const activity = {
+      id: item ? item.id : Date.now(),
       itemType: activityType,
       data: `${duration} min`,
       date: date.toDateString(),
       special: isSpecial,
     };
-    addActivity(newActivity);
+
+
+    if (item) {
+      updateActivity(activity);
+      Alert.alert('Success', 'Activity updated successfully.');
+    } else {
+      addActivity(activity);
+      Alert.alert('Success', 'Activity added successfully.');
+    }
+
     navigation.goBack();
   };
 
@@ -73,6 +104,52 @@ const AddActivityScreen = ({ navigation }) => {
     if (!date) {
       setDate(new Date());
     }
+  };
+
+  const handleDelete = () => {
+    if (item) {
+      removeActivity(item.id);
+      Alert.alert('Success', 'Activity deleted successfully.');
+      navigation.goBack();
+    }
+  };
+
+  const confirmSave = () => {
+    Alert.alert(
+      'Save',
+      `Are you sure you want to ${item ? 'save changes' : 'add this activity'}?`,
+      [
+        {
+          text: 'No',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: saveActivity,
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const confirmDelete = () => {
+    Alert.alert(
+      'Delete',
+      'Are you sure you want to delete this item?',
+      [
+        {
+          text: 'No',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: handleDelete,
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
@@ -103,8 +180,8 @@ const AddActivityScreen = ({ navigation }) => {
           pressedFunction={handleDatePicker}
           componentStyle={styles.input}
         >
-          <Text style={{ color: date ? "#000" : "#aaa" }}>
-            {date ? date.toDateString() : ""}
+          <Text style={{ color: date ? '#000' : '#aaa' }}>
+            {date ? date.toDateString() : ''}
           </Text>
         </PressableButton>
 
@@ -118,6 +195,17 @@ const AddActivityScreen = ({ navigation }) => {
           />
         )}
       </View>
+      
+      {!showDatePicker && special && <View style={styles.section}>
+        <Text style={styles.paragraph}>This item is marked as special. Select the checkbox if you would like to approve it.</Text>
+        <Checkbox
+          style={styles.checkbox}
+          value={isSpecialChecked}
+          onValueChange={setIsSpecialChecked}
+          color={isSpecialChecked ? '#4630EB' : undefined}
+        />
+      </View>}
+
       <View style={styles.buttonContainer}>
         {!showDatePicker && (
           <PressableButton
@@ -129,7 +217,7 @@ const AddActivityScreen = ({ navigation }) => {
         )}
         {!showDatePicker && (
           <PressableButton
-            pressedFunction={saveActivity}
+            pressedFunction={confirmSave}
             componentStyle={[styles.button, styles.saveButton]}
           >
             <Text style={styles.buttonText}>Save</Text>
@@ -147,40 +235,53 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
     paddingTop: 25,
   },
   label: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-    marginTop : 15,
+    fontWeight: 'bold',
+    color: '#333',
+    marginTop: 15,
   },
   dropDownContainer: {
     marginBottom: 20,
     zIndex: 1000,
   },
   dropDown: {
-    backgroundColor: "#fff",
-    borderColor: "#ccc",
+    backgroundColor: '#fff',
+    borderColor: '#ccc',
   },
   input: {
     height: 40,
-    borderColor: "#4A3C93",
+    borderColor: '#4A3C93',
     borderWidth: 2,
     paddingHorizontal: 10,
-    backgroundColor: "#D2C7E7",
-    justifyContent: "center",
-    borderRadius : 7,
-  },
-  datePicker: {
-    width: "100%",
-    backgroundColor: "#D2C7E7",
+    backgroundColor: '#D2C7E7',
+    justifyContent: 'center',
     borderRadius: 7,
   },
+  datePicker: {
+    width: '100%',
+    backgroundColor: '#D2C7E7',
+    borderRadius: 7,
+  },
+  section: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 30,
+  },
+  paragraph: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  checkbox: {
+    marginLeft: 5,
+  },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 70,
   },
   button: {
@@ -195,10 +296,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#4A3C93",
   },
   buttonText: {
-    color: "#fff",
-    textAlign: "center",
-    fontWeight: "bold",
+    color: '#fff',
+    fontSize: 16,
   },
 });
 
-export default AddActivityScreen;
+export default ActivityScreen;

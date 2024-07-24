@@ -2,7 +2,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import AddActivityScreen from './screens/AddActivityScreen';
 import AddDietScreen from './screens/AddDietScreen';
-import EditActivityScreen from './screens/EditActivityScreen';
 import EditDietScreen from './screens/EditDietScreen';
 import { ActivityProvider } from './components/ActivityContext';
 import { DietProvider } from './components/DietContext';
@@ -20,7 +19,6 @@ const AppContent = () => {
         <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="AddActivity" component={AddActivityScreen}/>
         <Stack.Screen name="AddDiet" component={AddDietScreen} />
-        <Stack.Screen name="EditActivity" component={EditActivityScreen} />
         <Stack.Screen name="EditDiet" component={EditDietScreen} />
       </Stack.Navigator>
     </NavigationContainer>
