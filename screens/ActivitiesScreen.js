@@ -15,18 +15,19 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import stylesHelper from "../styles/stylesHelper";
 import { collection, onSnapshot } from "firebase/firestore";
 import { database } from "../Firebase/firebaseSetup";
+
 const ActivitiesScreen = ({ navigation }) => {
-  const { activities, addActivity } = useActivity();
+  const { activities, setActivities } = useActivity();
 
   useEffect(() => {
-    onSnapshot(collection(database, "activities"), (querySnapShot) => {
-      let newArr = [];
+    const unsubscribe = onSnapshot(collection(database, "activities"), (querySnapShot) => {
+      let newActivities = [];
       if (!querySnapShot.empty) {
         querySnapShot.forEach((docSnapShot) => {
-          newArr.push({ ...docSnapShot.data(), id: docSnapShot.id });
+          newActivities.push({ ...docSnapShot.data(), id: docSnapShot.id });
         });
       }
-      addActivity(newArr);
+      setActivities(newActivities);
     });
     navigation.setOptions({
       headerRight: () => (
@@ -41,6 +42,7 @@ const ActivitiesScreen = ({ navigation }) => {
         </PressableButton>
       ),
     });
+    return () => unsubscribe();
   }, []);
 
   const handleEditNavigate = (item) => {
@@ -56,6 +58,7 @@ const ActivitiesScreen = ({ navigation }) => {
             <ItemsList item={item} editNavigateHandler={handleEditNavigate} />
           );
         }}
+        keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
       />
     </View>
@@ -67,11 +70,12 @@ export default ActivitiesScreen;
 const styles = StyleSheet.create({
   container: {
     flex: stylesHelper.flexSize.small,
-    padding: stylesHelper.spacing.small,
+    padding: stylesHelper.spacing.medium,
   },
   iconContainer: {
     flexDirection: stylesHelper.flex.row,
     alignItems: stylesHelper.alignItems.center,
+
   },
   buttonStyle: {
     marginRight: stylesHelper.spacing.small,

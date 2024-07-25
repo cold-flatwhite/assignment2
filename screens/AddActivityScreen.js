@@ -10,11 +10,10 @@ import stylesHelper from "../styles/stylesHelper";
 import { writeToDB } from "../Firebase/firestoreHelper";
 import { database } from "../Firebase/firebaseSetup";
 import { deleteFromDb } from "../Firebase/firestoreHelper";
-import { doc, onSnapshot } from "firebase/firestore";
+import { updateToDB } from "../Firebase/firestoreHelper";
 
 const AddActivityScreen = ({ route, navigation }) => {
   const { item } = route.params || {};
-  const { addActivity, updateActivity, removeActivity } = useActivity();
 
   const [activityType, setActivityType] = useState(item ? item.itemType : null);
   const [duration, setDuration] = useState(item ? item.data.split(" ")[0] : "");
@@ -85,7 +84,7 @@ const AddActivityScreen = ({ route, navigation }) => {
     };
 
     if (item) {
-      updateActivity(activity);
+      updateToDB(item.id, "activities", activity);
       Alert.alert("Success", "Activity updated successfully.");
     } else {
       writeToDB(activity, "activities")

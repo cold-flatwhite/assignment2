@@ -6,12 +6,8 @@ const ActivityContext = createContext();
 export const useActivity = () => useContext(ActivityContext);
 
 export const ActivityProvider = ({ children }) => {
-  const [activities, setActivities] = useState([
+  const [activities, setActivities] = useState([]);
 
-  ]);
-  const addActivity = (activity) => {
-    setActivities(activity);
-  };
 
   const removeActivity = (id) => {
     setActivities((prevActivities) =>
@@ -28,7 +24,7 @@ export const ActivityProvider = ({ children }) => {
   }; 
 
   return (
-    <ActivityContext.Provider value={{ activities, addActivity, removeActivity, updateActivity }}>
+    <ActivityContext.Provider value={{ activities, setActivities, removeActivity, updateActivity }}>
       {children}
     </ActivityContext.Provider>
   );

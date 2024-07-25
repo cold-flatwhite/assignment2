@@ -43,14 +43,13 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     backgroundColor: stylesHelper.colors.primary,
-    marginTop : stylesHelper.spacing.small,
-    width : stylesHelper.dimensions.widthFull,
+    padding: stylesHelper.spacing.extraSmall,
+    borderRadius: stylesHelper.borderRadius.medium,
+    marginBottom: stylesHelper.spacing.small,
+    width: stylesHelper.dimensions.widthFull,
   },
   buttonStyle : {
-    backgroundColor: stylesHelper.colors.primary,
-    padding: stylesHelper.spacing.small,
-    borderRadius: stylesHelper.borderRadius.medium,
-    width: stylesHelper.dimensions.widthFull,
+    flex: stylesHelper.flexSize.small,
   },
   itemContent: {
     flex: stylesHelper.flexSize.small,
