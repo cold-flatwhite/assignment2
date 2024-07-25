@@ -9,20 +9,27 @@ import stylesHelper from "../styles/stylesHelper";
 import { collection, onSnapshot } from "firebase/firestore";
 import { database } from "../Firebase/firebaseSetup";
 
-
 const DietScreen = ({ navigation }) => {
-  const {diets, setDiets} = useDiet();
+  const { diets, setDiets } = useDiet();
 
+  // useEffect hook to handle real-time updates from Firestore
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(database, "diets"), (querySnapShot) => {
-      let newDiets = [];
-      if (!querySnapShot.empty) {
-        querySnapShot.forEach((docSnapShot) => {
-          newDiets.push({ ...docSnapShot.data(), id: docSnapShot.id });
-        });
+    // Subscribe to changes in the "diets" collection
+    const unsubscribe = onSnapshot(
+      collection(database, "diets"),
+      (querySnapShot) => {
+        let newDiets = [];
+        if (!querySnapShot.empty) {
+          // Push each document's data into the newDiets array
+          querySnapShot.forEach((docSnapShot) => {
+            newDiets.push({ ...docSnapShot.data(), id: docSnapShot.id });
+          });
+        }
+        // Update the diets state with the new data
+        setDiets(newDiets);
       }
-      setDiets(newDiets);
-    });
+    );
+    // Set up the header right button to navigate to the "AddDiet" screen
     navigation.setOptions({
       headerRight: () => (
         <PressableButton
@@ -36,11 +43,13 @@ const DietScreen = ({ navigation }) => {
         </PressableButton>
       ),
     });
+    // Cleanup the subscription on component unmount
     return () => unsubscribe();
   }, [navigation]);
 
+  // Handler function to navigate to the "AddDiet" screen with item data
   const handleEditNavigate = (item) => {
-    navigation.navigate("AddDiet", {item});
+    navigation.navigate("AddDiet", { item });
   };
 
   return (

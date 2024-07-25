@@ -1,11 +1,12 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import PressableButton from '../components/PressableButton';
-import { useThemes } from '../components/ThemeContext';
-import stylesHelper from '../styles/stylesHelper';
+import React from "react";
+import { View, StyleSheet, Text } from "react-native";
+import PressableButton from "../components/PressableButton";
+import { useThemes } from "../components/ThemeContext";
+import stylesHelper from "../styles/stylesHelper";
 
 const SettingsScreen = () => {
-  const {toggleTheme} = useThemes();
+  // Extract the toggleTheme function from ThemeContext
+  const { toggleTheme } = useThemes();
 
   return (
     <View style={styles.container}>

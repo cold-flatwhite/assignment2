@@ -25,6 +25,7 @@ const DietScreen = ({ route, navigation }) => {
 
   const collectionName = "diets";
 
+  // Effect hook to set up the navigation header and delete button if editing an existing item
   useEffect(() => {
     if (item) {
       navigation.setOptions({
@@ -41,6 +42,7 @@ const DietScreen = ({ route, navigation }) => {
     }
   }, [item, navigation]);
 
+  // Function to validate user inputs
   const validateInputs = () => {
     if (!dietDescription) {
       Alert.alert("Invalid Input", "Please input a description for diet.");
@@ -61,6 +63,7 @@ const DietScreen = ({ route, navigation }) => {
     return true;
   };
 
+  // Function to save the diet entry to Firestore
   const saveDietEntry = () => {
     const caloriesInNum = parseFloat(calories);
     const isSpecial = !isSpecialChecked && caloriesInNum > 800;
@@ -80,6 +83,7 @@ const DietScreen = ({ route, navigation }) => {
     navigation.goBack();
   };
 
+  // Function to handle date change from DateTimePicker
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
@@ -87,6 +91,7 @@ const DietScreen = ({ route, navigation }) => {
     }
   };
 
+  // Function to toggle DateTimePicker visibility
   const handleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
     if (!date) {
@@ -94,6 +99,7 @@ const DietScreen = ({ route, navigation }) => {
     }
   };
 
+  // Function to handle deletion of the diet entry
   const handleDelete = () => {
     if (item) {
       deleteFromDb(item.id, collectionName);
@@ -101,6 +107,7 @@ const DietScreen = ({ route, navigation }) => {
     }
   };
 
+  // Function to confirm saving changes
   const confirmSave = () => {
     Alert.alert(
       "Import",
@@ -120,6 +127,7 @@ const DietScreen = ({ route, navigation }) => {
     );
   };
 
+  // Function to confirm deletion
   const confirmDelete = () => {
     Alert.alert(
       "Delete",
@@ -139,6 +147,7 @@ const DietScreen = ({ route, navigation }) => {
     );
   };
 
+  // Function to handle save button click
   const handleSave = () => {
     if (!validateInputs()) return;
     if (item) {

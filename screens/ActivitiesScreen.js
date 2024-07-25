@@ -20,15 +20,22 @@ const ActivitiesScreen = ({ navigation }) => {
   const { activities, setActivities } = useActivity();
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(database, "activities"), (querySnapShot) => {
-      let newActivities = [];
-      if (!querySnapShot.empty) {
-        querySnapShot.forEach((docSnapShot) => {
-          newActivities.push({ ...docSnapShot.data(), id: docSnapShot.id });
-        });
+    // Set up a real-time listener for the "activities" collection
+    const unsubscribe = onSnapshot(
+      collection(database, "activities"),
+      (querySnapShot) => {
+        let newActivities = [];
+        if (!querySnapShot.empty) {
+          querySnapShot.forEach((docSnapShot) => {
+            newActivities.push({ ...docSnapShot.data(), id: docSnapShot.id });
+          });
+        }
+        // Update the activities state with the new activities
+        setActivities(newActivities);
       }
-      setActivities(newActivities);
-    });
+    );
+
+    // Configure header options to include a button for adding activities
     navigation.setOptions({
       headerRight: () => (
         <PressableButton
@@ -38,15 +45,18 @@ const ActivitiesScreen = ({ navigation }) => {
           <View style={styles.iconContainer}>
             <AntDesign name="plus" size={20} color="white" />
             <FontAwesome5 name="running" size={20} color="white" />
-          </View> 
+          </View>
         </PressableButton>
       ),
     });
+
+    // Clean up listener on component unmount
     return () => unsubscribe();
   }, []);
 
+  // Function to handle navigation to the activity editing screen
   const handleEditNavigate = (item) => {
-    navigation.navigate("AddActivity", {item});
+    navigation.navigate("AddActivity", { item });
   };
 
   return (
@@ -75,7 +85,6 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: stylesHelper.flex.row,
     alignItems: stylesHelper.alignItems.center,
-
   },
   buttonStyle: {
     marginRight: stylesHelper.spacing.small,

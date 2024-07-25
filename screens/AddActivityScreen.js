@@ -31,6 +31,7 @@ const AddActivityScreen = ({ route, navigation }) => {
 
   const collectionName = "activities";
 
+  // useEffect hook to configure navigation options and header button for editing
   useEffect(() => {
     if (item) {
       navigation.setOptions({
@@ -47,6 +48,7 @@ const AddActivityScreen = ({ route, navigation }) => {
     }
   }, [navigation, item]);
 
+  // Validate user inputs before saving
   const validateInputs = () => {
     if (!activityType) {
       Alert.alert("Invalid Input", "Please select an activity.");
@@ -67,6 +69,7 @@ const AddActivityScreen = ({ route, navigation }) => {
     return true;
   };
 
+  // Save or update activity in Firestore
   const saveActivity = () => {
     const durationInMinutes = parseFloat(duration);
     const isSpecial =
@@ -89,6 +92,7 @@ const AddActivityScreen = ({ route, navigation }) => {
     navigation.goBack();
   };
 
+  // Handle date changes from DateTimePicker
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
@@ -96,6 +100,7 @@ const AddActivityScreen = ({ route, navigation }) => {
     }
   };
 
+  // Toggle date picker visibility
   const handleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
     if (!date) {
@@ -103,6 +108,7 @@ const AddActivityScreen = ({ route, navigation }) => {
     }
   };
 
+  // Handle deletion of an activity
   const handleDelete = () => {
     if (item) {
       deleteFromDb(item.id, collectionName);
@@ -110,6 +116,7 @@ const AddActivityScreen = ({ route, navigation }) => {
     }
   };
 
+  // Confirm before saving activity
   const confirmSave = () => {
     Alert.alert(
       "Important",
@@ -131,6 +138,7 @@ const AddActivityScreen = ({ route, navigation }) => {
     );
   };
 
+  // Confirm before deleting activity
   const confirmDelete = () => {
     Alert.alert(
       "Delete",
@@ -150,6 +158,7 @@ const AddActivityScreen = ({ route, navigation }) => {
     );
   };
 
+  // Handle save button press
   const handleSave = () => {
     if (!validateInputs()) return;
     if (item) {
