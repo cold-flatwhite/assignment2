@@ -8,7 +8,6 @@ import { AntDesign } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import stylesHelper from "../styles/stylesHelper";
 import { writeToDB } from "../Firebase/firestoreHelper";
-import { database } from "../Firebase/firebaseSetup";
 import { deleteFromDb } from "../Firebase/firestoreHelper";
 import { updateToDB } from "../Firebase/firestoreHelper";
 
@@ -29,6 +28,8 @@ const AddActivityScreen = ({ route, navigation }) => {
     { label: "Weights", value: "weights" },
     { label: "Yoga", value: "yoga" },
   ]);
+
+  const collectionName = "activities";
 
   useEffect(() => {
     if (item) {
@@ -84,10 +85,10 @@ const AddActivityScreen = ({ route, navigation }) => {
     };
 
     if (item) {
-      updateToDB(item.id, "activities", activity);
+      updateToDB(item.id, collectionName, activity);
       Alert.alert("Success", "Activity updated successfully.");
     } else {
-      writeToDB(activity, "activities")
+      writeToDB(activity, collectionName)
       Alert.alert("Success", "Activity added successfully.");
     }
 
@@ -110,7 +111,7 @@ const AddActivityScreen = ({ route, navigation }) => {
 
   const handleDelete = () => {
     if (item) {
-      deleteFromDb(item.id, "activities");
+      deleteFromDb(item.id, collectionName);
       Alert.alert("Success", "Activity deleted successfully.");
       navigation.goBack();
     }

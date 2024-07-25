@@ -1,16 +1,28 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import ItemsList from "../components/ItemsList";
 import { useEffect } from "react";
 import PressableButton from "../components/PressableButton";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { useDiet } from "../components/DietContext";
 import stylesHelper from "../styles/stylesHelper";
+import { collection, onSnapshot } from "firebase/firestore";
+import { database } from "../Firebase/firebaseSetup";
+
 
 const DietScreen = ({ navigation }) => {
-  const {diets} = useDiet();
+  const {diets, setDiets} = useDiet();
 
   useEffect(() => {
+    const unsubscribe = onSnapshot(collection(database, "diets"), (querySnapShot) => {
+      let newDiets = [];
+      if (!querySnapShot.empty) {
+        querySnapShot.forEach((docSnapShot) => {
+          newDiets.push({ ...docSnapShot.data(), id: docSnapShot.id });
+        });
+      }
+      setDiets(newDiets);
+    });
     navigation.setOptions({
       headerRight: () => (
         <PressableButton
@@ -24,18 +36,33 @@ const DietScreen = ({ navigation }) => {
         </PressableButton>
       ),
     });
+    return () => unsubscribe();
   }, [navigation]);
+
+  const handleEditNavigate = (item) => {
+    navigation.navigate("AddDiet", {item});
+  };
+
   return (
     <View style={styles.container}>
-      <ItemsList data={diets} editScreen = "AddDiet"/>
+      <FlatList
+        data={diets}
+        renderItem={({ item }) => {
+          return (
+            <ItemsList item={item} editNavigateHandler={handleEditNavigate} />
+          );
+        }}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.list}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: stylesHelper.flexSize.medium,
-    padding: stylesHelper.spacing.small,
+    flex: stylesHelper.flexSize.small,
+    padding: stylesHelper.spacing.medium,
   },
   iconContainer: {
     flexDirection: stylesHelper.flex.row,

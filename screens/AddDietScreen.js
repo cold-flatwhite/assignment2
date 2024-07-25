@@ -7,11 +7,14 @@ import { AntDesign } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import stylesHelper from "../styles/stylesHelper";
 import { writeToDB } from "../Firebase/firestoreHelper";
+import { deleteFromDb } from "../Firebase/firestoreHelper";
+import { updateToDB } from "../Firebase/firestoreHelper";
+
 
 const DietScreen = ({ route, navigation }) => {
   const { item } = route.params || {}; 
 
-  const { addDiet, removeDiet, updateDiet } = useDiet();
+  const { setDiets, removeDiet, updateDiet } = useDiet();
   const [dietDescription, setDietDescription] = useState(
     item ? item.itemType : ""
   );
@@ -20,6 +23,9 @@ const DietScreen = ({ route, navigation }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [special, setSpecial] = useState(item ? item.special : false);
   const [isSpecialChecked, setIsSpecialChecked] = useState(false);
+
+  const collectionName = "diets";
+
 
   useEffect(() => {
     if (item) {
@@ -66,7 +72,6 @@ const DietScreen = ({ route, navigation }) => {
     const isSpecial = !isSpecialChecked && caloriesInNum > 800;
 
     const newDiet = {
-      id: item ? item.id : Date.now(),
       itemType: dietDescription,
       data: `${calories}`,
       date: date.toDateString(),
@@ -74,11 +79,10 @@ const DietScreen = ({ route, navigation }) => {
     };
 
     if (item) {
-      updateDiet(newDiet);
+      updateToDB(item.id, collectionName, newDiet);
       Alert.alert("Success", "Diet updated successfully.");
     } else {
-      writeToDB(newDiet,"diets");
-      addDiet(newDiet);
+      writeToDB(newDiet, collectionName);
       Alert.alert("Success", "Diet added successfully.");
     }
 
@@ -101,7 +105,7 @@ const DietScreen = ({ route, navigation }) => {
 
   const handleDelete = () => {
     if (item) {
-      removeDiet(item.id);
+      deleteFromDb(item.id, collectionName);
       Alert.alert("Success", "Diet deleted successfully.");
       navigation.goBack();
     }

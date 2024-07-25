@@ -8,10 +8,6 @@ export const useDiet = () => useContext(DietContext);
 export const DietProvider = ({ children }) => {
   const [diets, setDiets] = useState([]);
 
-  const addDiet = (diet) => {
-    setDiets((prevDiets) => [...prevDiets, diet]);
-  };
-
   const removeDiet = (id) => {
     setDiets((prevDites) =>
       prevDites.filter((diet) => diet.id !== id)
@@ -27,7 +23,7 @@ export const DietProvider = ({ children }) => {
   };
 
   return (
-    <DietContext.Provider value={{ diets, addDiet, removeDiet, updateDiet }}>
+    <DietContext.Provider value={{ diets, setDiets, removeDiet, updateDiet }}>
       {children}
     </DietContext.Provider>
   );
