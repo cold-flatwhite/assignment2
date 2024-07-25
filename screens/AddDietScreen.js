@@ -10,9 +10,8 @@ import { writeToDB } from "../Firebase/firestoreHelper";
 import { deleteFromDb } from "../Firebase/firestoreHelper";
 import { updateToDB } from "../Firebase/firestoreHelper";
 
-
 const DietScreen = ({ route, navigation }) => {
-  const { item } = route.params || {}; 
+  const { item } = route.params || {};
 
   const { setDiets, removeDiet, updateDiet } = useDiet();
   const [dietDescription, setDietDescription] = useState(
@@ -26,11 +25,10 @@ const DietScreen = ({ route, navigation }) => {
 
   const collectionName = "diets";
 
-
   useEffect(() => {
     if (item) {
       navigation.setOptions({
-        title: 'Edit',
+        title: "Edit",
         headerRight: () => (
           <PressableButton
             componentStyle={styles.buttonStyle}
@@ -64,10 +62,6 @@ const DietScreen = ({ route, navigation }) => {
   };
 
   const saveDietEntry = () => {
-    if (!validateInputs()) {
-      return;
-    }
-
     const caloriesInNum = parseFloat(calories);
     const isSpecial = !isSpecialChecked && caloriesInNum > 800;
 
@@ -80,12 +74,9 @@ const DietScreen = ({ route, navigation }) => {
 
     if (item) {
       updateToDB(item.id, collectionName, newDiet);
-      Alert.alert("Success", "Diet updated successfully.");
     } else {
       writeToDB(newDiet, collectionName);
-      Alert.alert("Success", "Diet added successfully.");
     }
-
     navigation.goBack();
   };
 
@@ -106,7 +97,6 @@ const DietScreen = ({ route, navigation }) => {
   const handleDelete = () => {
     if (item) {
       deleteFromDb(item.id, collectionName);
-      Alert.alert("Success", "Diet deleted successfully.");
       navigation.goBack();
     }
   };
@@ -147,6 +137,15 @@ const DietScreen = ({ route, navigation }) => {
       ],
       { cancelable: false }
     );
+  };
+
+  const handleSave = () => {
+    if (!validateInputs()) return;
+    if (item) {
+      confirmSave();
+    } else {
+      saveDietEntry();
+    }
   };
 
   return (
@@ -216,7 +215,7 @@ const DietScreen = ({ route, navigation }) => {
         )}
         {!showDatePicker && (
           <PressableButton
-            pressedFunction={confirmSave}
+            pressedFunction={handleSave}
             componentStyle={[styles.button, styles.saveButton]}
           >
             <Text style={styles.buttonText}>Save</Text>
@@ -229,11 +228,11 @@ const DietScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: stylesHelper.flexSize.medium,
+    flex: stylesHelper.flexSize.small,
     padding: stylesHelper.spacing.medium,
   },
   contentContainer: {
-    flex: stylesHelper.flexSize.medium,
+    flex: stylesHelper.flexSize.small,
     justifyContent: stylesHelper.justifyContent.flexStart,
     paddingTop: stylesHelper.spacing.small,
   },
@@ -241,7 +240,7 @@ const styles = StyleSheet.create({
     fontSize: stylesHelper.fontSizes.medium,
     fontWeight: stylesHelper.fontWeights.bold,
     color: stylesHelper.colors.text,
-    marginTop: stylesHelper.spacing.medium,
+    marginTop: stylesHelper.spacing.small,
   },
   input: {
     height: stylesHelper.dimensions.heightSmall,

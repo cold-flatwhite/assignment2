@@ -68,9 +68,6 @@ const AddActivityScreen = ({ route, navigation }) => {
   };
 
   const saveActivity = () => {
-    if (!validateInputs()) {
-      return;
-    }
     const durationInMinutes = parseFloat(duration);
     const isSpecial =
       !isSpecialChecked &&
@@ -86,12 +83,9 @@ const AddActivityScreen = ({ route, navigation }) => {
 
     if (item) {
       updateToDB(item.id, collectionName, activity);
-      Alert.alert("Success", "Activity updated successfully.");
     } else {
-      writeToDB(activity, collectionName)
-      Alert.alert("Success", "Activity added successfully.");
+      writeToDB(activity, collectionName);
     }
-
     navigation.goBack();
   };
 
@@ -112,14 +106,13 @@ const AddActivityScreen = ({ route, navigation }) => {
   const handleDelete = () => {
     if (item) {
       deleteFromDb(item.id, collectionName);
-      Alert.alert("Success", "Activity deleted successfully.");
       navigation.goBack();
     }
   };
 
   const confirmSave = () => {
     Alert.alert(
-      "Save",
+      "Important",
       `Are you sure you want to ${
         item ? "save changes" : "add this activity"
       }?`,
@@ -155,6 +148,15 @@ const AddActivityScreen = ({ route, navigation }) => {
       ],
       { cancelable: false }
     );
+  };
+
+  const handleSave = () => {
+    if (!validateInputs()) return;
+    if (item) {
+      confirmSave();
+    } else {
+      saveActivity();
+    }
   };
 
   return (
@@ -227,7 +229,7 @@ const AddActivityScreen = ({ route, navigation }) => {
         )}
         {!showDatePicker && (
           <PressableButton
-            pressedFunction={confirmSave}
+            pressedFunction={handleSave}
             componentStyle={[styles.button, styles.saveButton]}
           >
             <Text style={styles.buttonText}>Save</Text>
